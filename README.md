@@ -6,6 +6,13 @@ Live coding for Dev07-06 Alterna Academy
 
 * Install [.net 8](https://dotnet.microsoft.com/en-us/download)
 
+Verify installation
+
+```bash
+% dotnet --version
+8.0.100
+```
+
 ## Editor | IDE
 
 * (Recommended) [Rider](https://www.jetbrains.com/es-es/rider/download)
