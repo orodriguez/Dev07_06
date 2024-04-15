@@ -7,6 +7,52 @@ public class LnkList
     public LnkList() => 
         _head = null;
 
+
+    // O(1)
+
+    public void Prepend(int value)
+    {
+        if (_head == null)
+        {
+            _head = new LnkNode(value);
+            return;
+        }
+
+        _head = new LnkNode(value, _head);
+    }
+    
+    // O(n)
+
+    public void Append(int value)
+    {
+        if (_head == null)
+        {
+            _head = new LnkNode(value);
+            return;
+        }
+
+        var current = _head;
+        while (current.Next != null) 
+            current = current.Next;
+        
+        current.Next = new LnkNode(value);
+    }
+
+    // O(1)
+    public int First()
+    {
+        if (_head == null)
+            throw new InvalidOperationException();
+        
+        return _head.Value;
+    }
+    
+    // O(?)
+    public int Get(int index)
+    {
+        throw new NotImplementedException();
+    }
+
     // O(n)
     public int Count()
     {
@@ -23,28 +69,8 @@ public class LnkList
         return result;
     }
 
-    // O(1)
-    public void Prepend(int value)
-    {
-        if (_head == null)
-        {
-            _head = new LnkNode(value);
-            return;
-        }
-
-        _head = new LnkNode(value, _head);
-    }
-
-    // O(1)
-    public int First()
-    {
-        if (_head == null)
-            throw new InvalidOperationException();
-        
-        return _head.Value;
-    }
-
     // O(n)
+
     public IEnumerable<int> ToEnumerable()
     {
         var result = new List<int>();
@@ -56,22 +82,6 @@ public class LnkList
             current = current.Next;
         }
         return result;
-    }
-
-    // O(n)
-    public void Append(int value)
-    {
-        if (_head == null)
-        {
-            _head = new LnkNode(value);
-            return;
-        }
-
-        var current = _head;
-        while (current.Next != null) 
-            current = current.Next;
-        
-        current.Next = new LnkNode(value);
     }
 
     private class LnkNode
