@@ -6,13 +6,24 @@ Live coding for Dev07-06 Alterna Academy
 
 ## Setup
 
-* Install [.net 8](https://dotnet.microsoft.com/en-us/download)
+Install [.net 8](https://dotnet.microsoft.com/en-us/download)
 
 Verify installation
 
 ```bash
-% dotnet --version
-8.0.100
+dotnet --version
+```
+
+## Build
+
+```bash
+dotnet build
+```
+
+## Run Tests
+
+```bash
+dotnet test
 ```
 
 ## Editor | IDE
