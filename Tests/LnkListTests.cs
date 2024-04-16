@@ -13,7 +13,7 @@ public class LnkListTests
         
         var result = ll.Get(1);
         
-        Assert.Equal(2, result);
+        Assert.Equal(20, result);
     }
     
     [Fact]

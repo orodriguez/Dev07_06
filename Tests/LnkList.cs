@@ -47,10 +47,26 @@ public class LnkList
         return _head.Value;
     }
     
-    // O(?)
+    // O(n)
     public int Get(int index)
     {
-        throw new NotImplementedException();
+        if(index < 0 || index >= this.Count())
+        {
+            throw new IndexOutOfRangeException();
+        }
+
+        var current = _head;
+        int count = 0;
+
+        while (count < index)
+        {
+            current = current.Next;
+            count++;
+        }
+
+        return current.Value;
+        
+        //throw new NotImplementedException();
     }
 
     // O(n)
