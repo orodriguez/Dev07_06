@@ -115,8 +115,6 @@ public class LnkList<T>
     }
 
     // O(n)
-
-
     public IEnumerable<T> ToEnumerable()
     {
         var result = new List<T>();
@@ -140,6 +138,13 @@ public class LnkList<T>
         // Ω(1)
         if (_head == null)
             return false;
+        
+        // Ω(1)
+        if (index == 0)
+        {
+            _head = _head.Next;
+            return true;
+        }
 
         var currentIndex = 0;
         var current = _head;
@@ -161,6 +166,33 @@ public class LnkList<T>
         
         return false;
     }
+    
+    // O(n)
+    public bool Remove(T value)
+    {
+        if (_head == null)
+            return false;
+        
+        if (_head.ValueEquals(value))
+        {
+            _head = _head.Next;
+            return true;
+        }
+
+        var current = _head;
+        while (current.Next != null)
+        {
+            if (current.NextValueEquals(value))
+            {
+                current.Next = current.Next.Next;
+                return true;
+            }
+
+            current = current.Next;
+        }
+
+        return false;
+    }
 
     private class LnkNode
     {
@@ -172,5 +204,11 @@ public class LnkList<T>
             Value = value;
             Next = next;
         }
+
+        public bool NextValueEquals(T value) => 
+            Next != null && Next.ValueEquals(value);
+
+        public bool ValueEquals(T value) => 
+            Value != null && Value.Equals(value);
     }
 }

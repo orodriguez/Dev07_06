@@ -10,12 +10,12 @@ public class LnkListTests
         ll.Append("a");
         ll.Append("b");
         ll.Append("c");
-        
+
         var result = ll[1];
-        
+
         Assert.Equal("b", result);
     }
-    
+
     [Fact]
     public void GetByIndex()
     {
@@ -24,12 +24,12 @@ public class LnkListTests
         ll.Append("a");
         ll.Append("b");
         ll.Append("c");
-        
+
         var result = ll.Get(1);
-        
+
         Assert.Equal("b", result);
     }
-    
+
     [Fact]
     public void GetByIndex_NotFound()
     {
@@ -38,21 +38,21 @@ public class LnkListTests
         Assert.Throws<IndexOutOfRangeException>(
             () => ll.Get(1));
     }
-    
+
     [Fact]
     public void GetByIndex_OutOfRange_Negative()
     {
         var ll = new LnkList<int>();
-        
+
         Assert.Throws<IndexOutOfRangeException>(
             () => ll.Get(-1));
     }
-    
+
     [Fact]
     public void GetByIndex_OutOfRange_GreaterThanCount()
     {
         var ll = new LnkList<int>();
-        
+
         ll.Append(10);
 
         Assert.Throws<IndexOutOfRangeException>(
@@ -66,12 +66,12 @@ public class LnkListTests
 
         Assert.False(ll.Any(value => value == 'a'));
     }
-    
+
     [Fact]
     public void Any_Exists()
     {
         var ll = new LnkList<char>();
-        
+
         ll.Append('a');
         ll.Append('b');
         ll.Append('c');
@@ -88,7 +88,7 @@ public class LnkListTests
 
         Assert.Equal(30, ll.First());
     }
-    
+
     [Fact]
     public void First_FromMany()
     {
@@ -126,7 +126,7 @@ public class LnkListTests
 
         Assert.Equal(1, ll.Count());
     }
-    
+
     [Fact]
     public void Count_ManyElement()
     {
@@ -138,12 +138,12 @@ public class LnkListTests
 
         Assert.Equal(3, ll.Count());
     }
-    
+
     [Fact]
     public void ToEnumerable_Empty()
     {
         var ll = new LnkList<int>();
-        
+
         Assert.Equal(Array.Empty<int>(), ll.ToEnumerable());
     }
 
@@ -156,7 +156,7 @@ public class LnkListTests
 
         Assert.Equal(new[] { 1 }, ll.ToEnumerable());
     }
-    
+
     [Fact]
     public void ToEnumerable_ManyElement()
     {
@@ -168,7 +168,7 @@ public class LnkListTests
 
         Assert.Equal(new[] { 1, 2, 3 }, ll.ToEnumerable());
     }
-    
+
     [Fact]
     public void ToEnumerable_Prepend()
     {
@@ -184,47 +184,105 @@ public class LnkListTests
     public void RemoveAt_Empty()
     {
         var list = new LnkList<string>();
-        
+
         Assert.False(list.RemoveAt(0));
     }
-    
+
     [Fact]
     public void RemoveAt_Many()
     {
         var list = LnkList<string>.From("a", "b", "c");
 
         Assert.True(list.RemoveAt(1));
-        
+
         Assert.Equal(new[] { "a", "c" }, list.ToEnumerable());
     }
-    
+
     [Fact]
     public void RemoveAt_Last()
     {
         var list = LnkList<string>.From("a", "b", "c");
 
         Assert.True(list.RemoveAt(2));
-        
+
         Assert.Equal(new[] { "a", "b" }, list.ToEnumerable());
     }
     
+    [Fact]
+    public void RemoveAt_First()
+    {
+        var list = LnkList<string>.From("a", "b", "c");
+
+        Assert.True(list.RemoveAt(0));
+
+        Assert.Equal(new[] { "b", "c" }, list.ToEnumerable());
+    }
+
     [Fact]
     public void RemoveAt_NotFound()
     {
         var list = LnkList<string>.From("a", "b", "c");
 
         Assert.False(list.RemoveAt(3));
-        
+
         Assert.Equal(new[] { "a", "b", "c" }, list.ToEnumerable());
     }
-    
+
     [Fact]
     public void RemoveAt_NegativeIndex()
     {
         var list = LnkList<string>.From("a", "b", "c");
 
         Assert.False(list.RemoveAt(-1));
-        
+
         Assert.Equal(new[] { "a", "b", "c" }, list.ToEnumerable());
+    }
+
+    [Fact]
+    public void Remove_Empty()
+    {
+        var list = new LnkList<string>();
+
+        Assert.False(list.Remove("a"));
+    }
+
+    [Fact]
+    public void Remove_FromMany()
+    {
+        var list = LnkList<string>.From("a", "b", "c");
+
+        Assert.True(list.Remove("b"));
+
+        Assert.Equal(new[] { "a", "c" }, list.ToEnumerable());
+    }
+
+    [Fact]
+    public void Remove_NotFound()
+    {
+        var list = LnkList<string>.From("a", "b", "c");
+
+        Assert.False(list.Remove("d"));
+
+        Assert.Equal(new[] { "a", "b", "c" }, list.ToEnumerable());
+    }
+    
+    [Fact]
+    public void Remove_Last()
+    {
+        var list = LnkList<string>.From("a", "b", "c");
+
+        Assert.True(list.Remove("c"));
+
+        Assert.Equal(new[] { "a", "b" }, list.ToEnumerable());
+    }
+    
+    [Fact]
+    public void Remove_First()
+    {
+        var list = LnkList<string>.From("a", "b", "c");
+
+        Assert.True(list.Remove("a"));
+
+        Assert.Equal(new[] { "b", "c" }, list.ToEnumerable());
     }
 }
