@@ -47,10 +47,17 @@ public class LnkList
         return _head.Value;
     }
     
-    // O(?)
+    // O(index)
     public int Get(int index)
     {
-        throw new NotImplementedException();
+    if(index < 0 || index >= Count() || _head == null)
+        throw new IndexOutOfRangeException();
+    var current = _head;
+    for (int i = index - 1; i >= 0; i--)
+    {
+        current = current!.Next;
+    }
+    return current!.Value;
     }
 
     // O(n)
