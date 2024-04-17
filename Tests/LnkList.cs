@@ -1,6 +1,6 @@
 namespace Tests;
 
-public class LnkList<T>
+public class LnkList<T> : ILnkList<T>
 {
     public static LnkList<T> From(params T[] values)
     {
@@ -97,8 +97,6 @@ public class LnkList<T>
     }
 
     // O(n)
-
-
     public int Count()
     {
         var result = 0;
