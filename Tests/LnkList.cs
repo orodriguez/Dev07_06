@@ -37,16 +37,28 @@ public class LnkList<T>
         
         current.Next = new LnkNode(value);
     }
-
-
+    
     // O(1)
-
     public T First()
     {
         if (_head == null)
             throw new InvalidOperationException();
         
         return _head.Value;
+    }
+
+    // O(n)
+    public bool Any(Func<T, bool> compare)
+    {
+        var current = _head;
+        while (current != null)
+        {
+            if (compare(current.Value))
+                return true;
+            
+            current = current.Next;
+        }
+        return false;
     }
 
     public T this[int index] => Get(index);
@@ -77,6 +89,7 @@ public class LnkList<T>
     }
 
     // O(n)
+
 
     public int Count()
     {

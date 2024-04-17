@@ -60,6 +60,26 @@ public class LnkListTests
     }
 
     [Fact]
+    public void Any_NotFound()
+    {
+        var ll = new LnkList<char>();
+
+        Assert.False(ll.Any(value => value == 'a'));
+    }
+    
+    [Fact]
+    public void Any_Exists()
+    {
+        var ll = new LnkList<char>();
+        
+        ll.Append('a');
+        ll.Append('b');
+        ll.Append('c');
+
+        Assert.True(ll.Any(value => value == 'b'));
+    }
+
+    [Fact]
     public void First_AfterPrepend()
     {
         var ll = new LnkList<int>();
