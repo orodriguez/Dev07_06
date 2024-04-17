@@ -11,9 +11,14 @@ public class LnkListTests
         ll.Append(20);
         ll.Append(30);
         
-        var result = ll.Get(1);
+        var result = ll.Get(0);
+        Assert.Equal(10, result);
         
-        Assert.Equal(2, result);
+        var result1 = ll.Get(1);
+        Assert.Equal(20, result1);
+        
+        var result2 = ll.Get(2);
+        Assert.Equal(30, result2);
     }
     
     [Fact]
