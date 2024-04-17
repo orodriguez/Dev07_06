@@ -48,7 +48,7 @@ public class LnkListTests
     {
         var ll = new LnkList();
 
-        Assert.Equal(0, ll.Count());
+        Assert.Equal(0, ll.Count);
     }
 
     [Fact]
@@ -58,7 +58,7 @@ public class LnkListTests
 
         ll.Prepend(10);
 
-        Assert.Equal(1, ll.Count());
+        Assert.Equal(1, ll.Count);
     }
     
     [Fact]
@@ -70,7 +70,7 @@ public class LnkListTests
         ll.Append(20);
         ll.Append(30);
 
-        Assert.Equal(3, ll.Count());
+        Assert.Equal(3, ll.Count);
     }
     
     [Fact]

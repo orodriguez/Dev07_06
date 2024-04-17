@@ -7,11 +7,13 @@ public class LnkList
     public LnkList() => 
         _head = null;
 
+    public int Count = 0;
 
     // O(1)
 
     public void Prepend(int value)
     {
+        this.Count++;
         if (_head == null)
         {
             _head = new LnkNode(value);
@@ -25,6 +27,7 @@ public class LnkList
 
     public void Append(int value)
     {
+        this.Count++;
         if (_head == null)
         {
             _head = new LnkNode(value);
@@ -50,7 +53,7 @@ public class LnkList
     // O(?)
     public int Get(int index)
     {
-        if (index < 0 || index >= this.Count() || _head == null)
+        if (index < 0 || index >= this.Count || _head == null)
         {
             throw new IndexOutOfRangeException();
         }
@@ -68,20 +71,7 @@ public class LnkList
     }
 
     // O(n)
-    public int Count()
-    {
-        var result = 0;
 
-        var current = _head;
-
-        while (current != null)
-        {
-            result++;
-            current = current.Next;
-        }
-
-        return result;
-    }
 
     // O(n)
 
