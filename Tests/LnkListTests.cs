@@ -3,6 +3,20 @@ namespace Tests;
 public class LnkListTests
 {
     [Fact]
+    public void GetByIndex_UsingIndexer()
+    {
+        var ll = new LnkList<string>();
+
+        ll.Append("a");
+        ll.Append("b");
+        ll.Append("c");
+        
+        var result = ll[1];
+        
+        Assert.Equal("b", result);
+    }
+    
+    [Fact]
     public void GetByIndex()
     {
         var ll = new LnkList<string>();

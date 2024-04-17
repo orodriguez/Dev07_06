@@ -8,6 +8,7 @@ public class LnkList<T>
         _head = null;
 
     // O(1)
+
     public void Prepend(T value)
     {
         if (_head == null)
@@ -18,8 +19,10 @@ public class LnkList<T>
 
         _head = new LnkNode(value, _head);
     }
-    
+
+
     // O(n)
+
     public void Append(T value)
     {
         if (_head == null)
@@ -35,7 +38,9 @@ public class LnkList<T>
         current.Next = new LnkNode(value);
     }
 
+
     // O(1)
+
     public T First()
     {
         if (_head == null)
@@ -43,9 +48,10 @@ public class LnkList<T>
         
         return _head.Value;
     }
-    
+
+    public T this[int index] => Get(index);
+
     // O(n)
-    // TODO: Indexers
     public T Get(int index)
     {
         // Ω(1)
@@ -71,6 +77,7 @@ public class LnkList<T>
     }
 
     // O(n)
+
     public int Count()
     {
         var result = 0;
@@ -87,6 +94,7 @@ public class LnkList<T>
     }
 
     // O(n)
+
 
     public IEnumerable<T> ToEnumerable()
     {
