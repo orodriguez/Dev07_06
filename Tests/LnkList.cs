@@ -50,8 +50,24 @@ public class LnkList
     // O(?)
     public int Get(int index)
     {
-        throw new NotImplementedException();
+        if (index < 0)
+            throw new IndexOutOfRangeException("Index must be non-negative.");
+
+        var current = _head;
+        int currentIndex = 0;
+
+        while (current != null && currentIndex < index)
+        {
+            current = current.Next!;
+            currentIndex++;
+        }
+
+        if (current == null)
+            throw new IndexOutOfRangeException("Index is out of range.");
+
+        return current.Value;
     }
+
 
     // O(n)
     public int Count()
