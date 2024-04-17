@@ -1,16 +1,14 @@
 namespace Tests;
 
-public class LnkList
+public class LnkList<T>
 {
     private LnkNode? _head;
 
     public LnkList() => 
         _head = null;
 
-
     // O(1)
-
-    public void Prepend(int value)
+    public void Prepend(T value)
     {
         if (_head == null)
         {
@@ -22,8 +20,7 @@ public class LnkList
     }
     
     // O(n)
-
-    public void Append(int value)
+    public void Append(T value)
     {
         if (_head == null)
         {
@@ -39,7 +36,7 @@ public class LnkList
     }
 
     // O(1)
-    public int First()
+    public T First()
     {
         if (_head == null)
             throw new InvalidOperationException();
@@ -48,7 +45,8 @@ public class LnkList
     }
     
     // O(n)
-    public int Get(int index)
+    // TODO: Indexers
+    public T Get(int index)
     {
         // Ω(1)
         if (_head == null)
@@ -90,9 +88,9 @@ public class LnkList
 
     // O(n)
 
-    public IEnumerable<int> ToEnumerable()
+    public IEnumerable<T> ToEnumerable()
     {
-        var result = new List<int>();
+        var result = new List<T>();
         
         var current = _head;
         while (current != null)
@@ -105,10 +103,10 @@ public class LnkList
 
     private class LnkNode
     {
-        public int Value { get; }
+        public T Value { get; }
         public LnkNode? Next { get; set; }
 
-        public LnkNode(int value, LnkNode? next = null)
+        public LnkNode(T value, LnkNode? next = null)
         {
             Value = value;
             Next = next;

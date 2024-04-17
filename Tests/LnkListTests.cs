@@ -5,21 +5,21 @@ public class LnkListTests
     [Fact]
     public void GetByIndex()
     {
-        var ll = new LnkList();
+        var ll = new LnkList<string>();
 
-        ll.Append(10);
-        ll.Append(20);
-        ll.Append(30);
+        ll.Append("a");
+        ll.Append("b");
+        ll.Append("c");
         
         var result = ll.Get(1);
         
-        Assert.Equal(20, result);
+        Assert.Equal("b", result);
     }
     
     [Fact]
     public void GetByIndex_NotFound()
     {
-        var ll = new LnkList();
+        var ll = new LnkList<int>();
 
         Assert.Throws<IndexOutOfRangeException>(
             () => ll.Get(1));
@@ -28,7 +28,7 @@ public class LnkListTests
     [Fact]
     public void GetByIndex_OutOfRange_Negative()
     {
-        var ll = new LnkList();
+        var ll = new LnkList<int>();
         
         Assert.Throws<IndexOutOfRangeException>(
             () => ll.Get(-1));
@@ -37,7 +37,7 @@ public class LnkListTests
     [Fact]
     public void GetByIndex_OutOfRange_GreaterThanCount()
     {
-        var ll = new LnkList();
+        var ll = new LnkList<int>();
         
         ll.Append(10);
 
@@ -48,9 +48,21 @@ public class LnkListTests
     [Fact]
     public void First_AfterPrepend()
     {
-        var ll = new LnkList();
+        var ll = new LnkList<int>();
 
         ll.Prepend(30);
+
+        Assert.Equal(30, ll.First());
+    }
+    
+    [Fact]
+    public void First_FromMany()
+    {
+        var ll = new LnkList<int>();
+
+        ll.Append(30);
+        ll.Append(40);
+        ll.Append(50);
 
         Assert.Equal(30, ll.First());
     }
@@ -58,7 +70,7 @@ public class LnkListTests
     [Fact]
     public void First_Empty()
     {
-        var ll = new LnkList();
+        var ll = new LnkList<int>();
 
         Assert.Throws<InvalidOperationException>(() => ll.First());
     }
@@ -66,7 +78,7 @@ public class LnkListTests
     [Fact]
     public void Count()
     {
-        var ll = new LnkList();
+        var ll = new LnkList<int>();
 
         Assert.Equal(0, ll.Count());
     }
@@ -74,7 +86,7 @@ public class LnkListTests
     [Fact]
     public void Count_OneElement()
     {
-        var ll = new LnkList();
+        var ll = new LnkList<int>();
 
         ll.Prepend(10);
 
@@ -84,7 +96,7 @@ public class LnkListTests
     [Fact]
     public void Count_ManyElement()
     {
-        var ll = new LnkList();
+        var ll = new LnkList<int>();
 
         ll.Append(10);
         ll.Append(20);
@@ -96,7 +108,7 @@ public class LnkListTests
     [Fact]
     public void ToEnumerable_Empty()
     {
-        var ll = new LnkList();
+        var ll = new LnkList<int>();
         
         Assert.Equal(Array.Empty<int>(), ll.ToEnumerable());
     }
@@ -104,7 +116,7 @@ public class LnkListTests
     [Fact]
     public void ToEnumerable_OneElement()
     {
-        var ll = new LnkList();
+        var ll = new LnkList<int>();
 
         ll.Append(1);
 
@@ -114,7 +126,7 @@ public class LnkListTests
     [Fact]
     public void ToEnumerable_ManyElement()
     {
-        var ll = new LnkList();
+        var ll = new LnkList<int>();
 
         ll.Append(1);
         ll.Append(2);
@@ -126,7 +138,7 @@ public class LnkListTests
     [Fact]
     public void ToEnumerable_Prepend()
     {
-        var ll = new LnkList();
+        var ll = new LnkList<int>();
 
         ll.Append(1);
         ll.Prepend(2);
