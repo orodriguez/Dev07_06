@@ -2,6 +2,14 @@ namespace Tests;
 
 public class LnkList<T>
 {
+    public static LnkList<T> From(params T[] values)
+    {
+        var list = new LnkList<T>();
+        foreach (var value in values) 
+            list.Append(value);
+        return list;
+    }
+    
     private LnkNode? _head;
 
     public LnkList() => 
@@ -120,6 +128,38 @@ public class LnkList<T>
             current = current.Next;
         }
         return result;
+    }
+
+    // O(n)
+    public bool RemoveAt(int index)
+    {
+        // Ω(1)
+        if (index < 0)
+            return false;
+        
+        // Ω(1)
+        if (_head == null)
+            return false;
+
+        var currentIndex = 0;
+        var current = _head;
+        
+        // Ω(1)
+        // O(n - 1)
+        while (current.Next != null)
+        {
+            if (currentIndex == index - 1)
+            {
+                var nextNode = current.Next;
+                current.Next = nextNode.Next;
+                return true;
+            }
+
+            currentIndex++;
+            current = current.Next;
+        }
+        
+        return false;
     }
 
     private class LnkNode

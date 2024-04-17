@@ -179,4 +179,52 @@ public class LnkListTests
 
         Assert.Equal(new[] { 2, 1 }, ll.ToEnumerable());
     }
+
+    [Fact]
+    public void RemoveAt_Empty()
+    {
+        var list = new LnkList<string>();
+        
+        Assert.False(list.RemoveAt(0));
+    }
+    
+    [Fact]
+    public void RemoveAt_Many()
+    {
+        var list = LnkList<string>.From("a", "b", "c");
+
+        Assert.True(list.RemoveAt(1));
+        
+        Assert.Equal(new[] { "a", "c" }, list.ToEnumerable());
+    }
+    
+    [Fact]
+    public void RemoveAt_Last()
+    {
+        var list = LnkList<string>.From("a", "b", "c");
+
+        Assert.True(list.RemoveAt(2));
+        
+        Assert.Equal(new[] { "a", "b" }, list.ToEnumerable());
+    }
+    
+    [Fact]
+    public void RemoveAt_NotFound()
+    {
+        var list = LnkList<string>.From("a", "b", "c");
+
+        Assert.False(list.RemoveAt(3));
+        
+        Assert.Equal(new[] { "a", "b", "c" }, list.ToEnumerable());
+    }
+    
+    [Fact]
+    public void RemoveAt_NegativeIndex()
+    {
+        var list = LnkList<string>.From("a", "b", "c");
+
+        Assert.False(list.RemoveAt(-1));
+        
+        Assert.Equal(new[] { "a", "b", "c" }, list.ToEnumerable());
+    }
 }
