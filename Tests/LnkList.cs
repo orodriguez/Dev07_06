@@ -50,7 +50,19 @@ public class LnkList
     // O(?)
     public int Get(int index)
     {
-        throw new NotImplementedException();
+        if (index < 0 || index>= Count())
+        throw new IndexOutOfRangeException();
+
+        var current = _head;
+        for(int i = 0; i < index && current != null; i++)
+        {
+            current = current.Next;
+        }
+
+        if (current == null)
+        throw new IndexOutOfRangeException();
+
+        return current.Value;
     }
 
     // O(n)
