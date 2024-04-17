@@ -12,8 +12,10 @@ public class LnkListTests
         ll.Append(30);
         
         var result = ll.Get(1);
-        
+        var result = ll.Get(0);
+
         Assert.Equal(2, result);
+        Assert.Equal(10, result);
     }
     
     [Fact]
@@ -22,7 +24,8 @@ public class LnkListTests
         var ll = new LnkList();
 
         Assert.Throws<IndexOutOfRangeException>(
-            () => ll.Get(1));
+            () => ll.Get(1);
+            () => ll.Get-(1));
     }
 
     [Fact]
