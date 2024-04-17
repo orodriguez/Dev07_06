@@ -13,7 +13,7 @@ public class LnkListTests
         
         var result = ll.Get(1);
         
-        Assert.Equal(2, result);
+        Assert.Equal(20, result);
     }
     
     [Fact]
@@ -23,6 +23,26 @@ public class LnkListTests
 
         Assert.Throws<IndexOutOfRangeException>(
             () => ll.Get(1));
+    }
+    
+    [Fact]
+    public void GetByIndex_OutOfRange_Negative()
+    {
+        var ll = new LnkList();
+        
+        Assert.Throws<IndexOutOfRangeException>(
+            () => ll.Get(-1));
+    }
+    
+    [Fact]
+    public void GetByIndex_OutOfRange_GreaterThanCount()
+    {
+        var ll = new LnkList();
+        
+        ll.Append(10);
+
+        Assert.Throws<IndexOutOfRangeException>(
+            () => ll.Get(2));
     }
 
     [Fact]
