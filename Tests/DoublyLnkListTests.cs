@@ -121,7 +121,6 @@ public class DoublyLnkListTests
     public void Count_OneElement()
     {
         var ll = new DoublyLnkList<int>();
-
         ll.Prepend(10);
 
         Assert.Equal(1, ll.Count());
