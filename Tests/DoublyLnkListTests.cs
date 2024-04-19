@@ -114,7 +114,7 @@ public class DoublyLnkListTests
     {
         var ll = new DoublyLnkList<int>();
 
-        Assert.Equal(0, ll.Count());
+        Assert.Equal(0, ll.Count);
     }
 
     [Fact]
@@ -124,7 +124,7 @@ public class DoublyLnkListTests
 
         ll.Prepend(10);
 
-        Assert.Equal(1, ll.Count());
+        Assert.Equal(1, ll.Count);
     }
 
     [Fact]
@@ -136,7 +136,7 @@ public class DoublyLnkListTests
         ll.Append(20);
         ll.Append(30);
 
-        Assert.Equal(3, ll.Count());
+        Assert.Equal(3, ll.Count);
     }
 
     [Fact]
@@ -203,7 +203,11 @@ public class DoublyLnkListTests
     [Fact]
     public void RemoveAt_Many()
     {
-        var list = DoublyLnkList<string>.From("a", "b", "c");
+        var list = new DoublyLnkList<string>();
+
+        list.Append("a");
+        list.Append("b");
+        list.Append("c");
 
         Assert.True(list.RemoveAt(1));
 
@@ -213,7 +217,11 @@ public class DoublyLnkListTests
     [Fact]
     public void RemoveAt_Last()
     {
-        var list = DoublyLnkList<string>.From("a", "b", "c");
+        var list = new DoublyLnkList<string>();
+
+        list.Append("a");
+        list.Append("b");
+        list.Append("c");
 
         Assert.True(list.RemoveAt(2));
 
@@ -223,7 +231,11 @@ public class DoublyLnkListTests
     [Fact]
     public void RemoveAt_First()
     {
-        var list = DoublyLnkList<string>.From("a", "b", "c");
+        var list = new DoublyLnkList<string>();
+
+        list.Append("a");
+        list.Append("b");
+        list.Append("c");
 
         Assert.True(list.RemoveAt(0));
 
@@ -233,7 +245,11 @@ public class DoublyLnkListTests
     [Fact]
     public void RemoveAt_NotFound()
     {
-        var list = DoublyLnkList<string>.From("a", "b", "c");
+        var list = new DoublyLnkList<string>();
+
+        list.Append("a");
+        list.Append("b");
+        list.Append("c");
 
         Assert.False(list.RemoveAt(3));
 
@@ -243,7 +259,11 @@ public class DoublyLnkListTests
     [Fact]
     public void RemoveAt_NegativeIndex()
     {
-        var list = DoublyLnkList<string>.From("a", "b", "c");
+        var list = new DoublyLnkList<string>();
+
+        list.Append("a");
+        list.Append("b");
+        list.Append("c");
 
         Assert.False(list.RemoveAt(-1));
 
@@ -261,7 +281,11 @@ public class DoublyLnkListTests
     [Fact]
     public void Remove_FromMany()
     {
-        var list = DoublyLnkList<string>.From("a", "b", "c");
+        var list = new DoublyLnkList<string>();
+
+        list.Append("a");
+        list.Append("b");
+        list.Append("c");
 
         Assert.True(list.Remove("b"));
 
@@ -271,7 +295,11 @@ public class DoublyLnkListTests
     [Fact]
     public void Remove_NotFound()
     {
-        var list = DoublyLnkList<string>.From("a", "b", "c");
+        var list = new DoublyLnkList<string>();
+
+        list.Append("a");
+        list.Append("b");
+        list.Append("c");
 
         Assert.False(list.Remove("d"));
 
@@ -281,7 +309,11 @@ public class DoublyLnkListTests
     [Fact]
     public void Remove_Last()
     {
-        var list = DoublyLnkList<string>.From("a", "b", "c");
+        var list = new DoublyLnkList<string>();
+
+        list.Append("a");
+        list.Append("b");
+        list.Append("c");
 
         Assert.True(list.Remove("c"));
 
@@ -291,7 +323,11 @@ public class DoublyLnkListTests
     [Fact]
     public void Remove_First()
     {
-        var list = DoublyLnkList<string>.From("a", "b", "c");
+        var list = new DoublyLnkList<string>();
+
+        list.Append("a");
+        list.Append("b");
+        list.Append("c");
 
         Assert.True(list.Remove("a"));
 

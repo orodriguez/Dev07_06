@@ -2,6 +2,9 @@ namespace Tests;
 
 public class DoublyLnkList<T> : ILnkList<T>
 {
+    private LnkNode? _head = null;
+    private LnkNode? _last = null;
+    
     public static DoublyLnkList<T> From(params T[] values)
     {
         throw new NotImplementedException();
@@ -9,53 +12,150 @@ public class DoublyLnkList<T> : ILnkList<T>
 
     public void Prepend(T value)
     {
-        throw new NotImplementedException();
+        var node = new LnkNode(value);
+        if(_head == null)
+        {
+            _head = new LnkNode(value);
+            _last = _head;
+        }
+        //_head = new LnkNode(value, _head);
+        node.Next = _head;
+        _head = node;
+        Count += 1;
     }
 
     public void Append(T value)
     {
-        throw new NotImplementedException();
+        var node = new LnkNode(value);
+        if(_last == null)
+        {
+            _head = new LnkNode(value);
+            _last = _head;
+        }
+        // _last = new LnkNode(value, null, _last);
+        node.Previous = _last;
+        _last = node;
+        Count += 1;
     }
 
     public T First()
     {
-        throw new NotImplementedException();
+        if (_head == null)
+            throw new IndexOutOfRangeException();
+
+        return _head.Value!;
     }
 
     public bool Any(Func<T, bool> compare)
     {
-        throw new NotImplementedException();
+        var current = _head;
+        while (current != null)
+        {
+            if (compare(current.Value!))
+                return true;
+
+            current = current.Next;
+        }
+        return false;
     }
 
-    public T this[int index] => throw new NotImplementedException();
+    public T this[int index] => Get(index);
 
     public T Get(int index)
     {
-        throw new NotImplementedException();
+        if (index < 0)
+            throw new IndexOutOfRangeException();
+
+        var current = _head;
+        int currentIndex = 0;
+        while (current != null)
+        {
+            if(currentIndex == index)
+            {
+                return current.Value!;
+            }
+            currentIndex++;
+            current = current.Next;
+        }
+        throw new IndexOutOfRangeException();
     }
 
-    public int Count()
-    {
-        throw new NotImplementedException();
-    }
+    // O(1)
+    public int Count = 0;
 
     public IEnumerable<T> ToEnumerable()
     {
-        throw new NotImplementedException();
+        List<T> list = new List<T>();
+
+        var current = _head;
+        while (current != null)
+        {
+            list.Add(current.Value!);
+            current = current.Next;
+        }
+        return list;
     }
 
-    public IEnumerable<int> ToReversedEnumerable()
+    public IEnumerable<T> ToReversedEnumerable()
     {
-        throw new NotImplementedException();
+        List<T> list = new List<T>();
+
+        var current = _last;
+        while(current != null)
+        {
+            list.Add(current.Value!);
+            current = current.Previous;
+        }
+        return list;
     }
 
     public bool RemoveAt(int index)
     {
-        throw new NotImplementedException();
+        if (index < 0)
+            return false;
+
+        var current = _head;
+        var currentIndex = 0;
+
+        while (current != null)
+        {
+            if (currentIndex == index)
+            {
+                return true;
+            }
+            currentIndex++;
+            current = current.Next;
+        }
+        return false;
     }
 
     public bool Remove(T value)
     {
-        throw new NotImplementedException();
+        var current = _head;
+
+        while (current != null)
+        {
+            if(current.Value!.Equals(value))
+            {
+                return true;
+            }
+            current = current.Next;
+        }
+        return false;
+    }
+
+    public class LnkNode
+    {
+        public T? Value { get; set; }
+        public LnkNode? Next { get; set; }
+        public LnkNode? Previous { get; set; }
+
+        public LnkNode(T? value, LnkNode? next = null, LnkNode? previous = null)
+        {
+            Value = value;
+            Next = next;
+            Previous = previous;
+        }
     }
 }
+

@@ -50,7 +50,7 @@ public class LnkList<T> : ILnkList<T>
     public T First()
     {
         if (_head == null)
-            throw new InvalidOperationException();
+            throw new IndexOutOfRangeException();
         
         return _head.Value;
     }
@@ -75,11 +75,7 @@ public class LnkList<T> : ILnkList<T>
     public T Get(int index)
     {
         // Ω(1)
-        if (_head == null)
-            throw new IndexOutOfRangeException();
-        
-        // Ω(1)
-        if (index < 0)
+        if (_head == null && index < 0)
             throw new IndexOutOfRangeException();
         
         var currentIndex = 0;
