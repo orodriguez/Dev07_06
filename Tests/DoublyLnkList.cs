@@ -52,8 +52,7 @@ namespace Tests
             }
             _count++;
         }
-
-
+        
         public void Append(T value)
         {
             var newNode = new LnkNode(value);
@@ -71,8 +70,6 @@ namespace Tests
             _count++;
         }
 
-
-
         public T First()
         {
             if (_head == null)
@@ -81,8 +78,6 @@ namespace Tests
             }
             return _head.Value;
         }
-
-
 
         public bool Any(Func<T, bool> compare)
         {
@@ -97,9 +92,6 @@ namespace Tests
             }
             return false;
         }
-
-
-
 
         public T this[int index]
         {
@@ -118,8 +110,6 @@ namespace Tests
             }
         }
 
-
-
         public T Get(int index)
         {
             if (index < 0 || index >= _count)
@@ -134,13 +124,10 @@ namespace Tests
             return current!.Value;
         }
 
-
-
         public int Count()
         {
             return _count;
         }
-
 
         public IEnumerable<T> ToEnumerable()
         {
@@ -154,8 +141,6 @@ namespace Tests
             return list;
         }
 
-
-
         public IEnumerable<T> ToReversedEnumerable()
         {
             List<T> list = new List<T>();
@@ -168,8 +153,6 @@ namespace Tests
             }
             return list;
         }
-
-
 
         public bool RemoveAt(int index)
         {
@@ -210,9 +193,6 @@ namespace Tests
             return true;
         }
 
-
-
-
         public bool Remove(T value)
         {
             var current = _head;
@@ -249,12 +229,5 @@ namespace Tests
             }
             return false;
         }
-
-
-
-
-
-      
     }
-    
-    }}
+    }
