@@ -5,6 +5,11 @@ public class DoublyLnkListTests : AbstractLnkListTests
     protected override ILnkList<T> CreateLinkedList<T>() => new DoublyLnkList<T>();
     protected override ILnkList<T> CreateLinkedList<T>(params T[] values) => DoublyLnkList<T>.From(values);
 
+
+    private class NodeEnumerator
+    {
+        
+    }
     [Fact]
     public void Last_One()
     {
