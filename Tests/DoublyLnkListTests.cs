@@ -1,11 +1,11 @@
 namespace Tests;
 
-public class LnkListTests
+public class DoublyLnkListTests
 {
     [Fact]
     public void GetByIndex_UsingIndexer()
     {
-        var ll = new LnkList<string>();
+        var ll = new DoublyLnkList<string>();
 
         ll.Append("a");
         ll.Append("b");
@@ -19,7 +19,7 @@ public class LnkListTests
     [Fact]
     public void GetByIndex()
     {
-        var ll = new LnkList<string>();
+        var ll = new DoublyLnkList<string>();
 
         ll.Append("a");
         ll.Append("b");
@@ -33,7 +33,7 @@ public class LnkListTests
     [Fact]
     public void GetByIndex_NotFound()
     {
-        var ll = new LnkList<int>();
+        var ll = new DoublyLnkList<int>();
 
         Assert.Throws<IndexOutOfRangeException>(
             () => ll.Get(1));
@@ -42,7 +42,7 @@ public class LnkListTests
     [Fact]
     public void GetByIndex_OutOfRange_Negative()
     {
-        var ll = new LnkList<int>();
+        var ll = new DoublyLnkList<int>();
 
         Assert.Throws<IndexOutOfRangeException>(
             () => ll.Get(-1));
@@ -51,7 +51,7 @@ public class LnkListTests
     [Fact]
     public void GetByIndex_OutOfRange_GreaterThanCount()
     {
-        var ll = new LnkList<int>();
+        var ll = new DoublyLnkList<int>();
 
         ll.Append(10);
 
@@ -62,7 +62,7 @@ public class LnkListTests
     [Fact]
     public void Any_NotFound()
     {
-        var ll = new LnkList<char>();
+        var ll = new DoublyLnkList<char>();
 
         Assert.False(ll.Any(value => value == 'a'));
     }
@@ -70,7 +70,7 @@ public class LnkListTests
     [Fact]
     public void Any_Exists()
     {
-        var ll = new LnkList<char>();
+        var ll = new DoublyLnkList<char>();
 
         ll.Append('a');
         ll.Append('b');
@@ -82,7 +82,7 @@ public class LnkListTests
     [Fact]
     public void First_AfterPrepend()
     {
-        var ll = new LnkList<int>();
+        var ll = new DoublyLnkList<int>();
 
         ll.Prepend(30);
 
@@ -92,7 +92,7 @@ public class LnkListTests
     [Fact]
     public void First_FromMany()
     {
-        var ll = new LnkList<int>();
+        var ll = new DoublyLnkList<int>();
 
         ll.Append(30);
         ll.Append(40);
@@ -104,7 +104,7 @@ public class LnkListTests
     [Fact]
     public void First_Empty()
     {
-        var ll = new LnkList<int>();
+        var ll = new DoublyLnkList<int>();
 
         Assert.Throws<InvalidOperationException>(() => ll.First());
     }
@@ -112,7 +112,7 @@ public class LnkListTests
     [Fact]
     public void Count()
     {
-        var ll = new LnkList<int>();
+        var ll = new DoublyLnkList<int>();
 
         Assert.Equal(0, ll.Count());
     }
@@ -120,7 +120,7 @@ public class LnkListTests
     [Fact]
     public void Count_OneElement()
     {
-        var ll = new LnkList<int>();
+        var ll = new DoublyLnkList<int>();
 
         ll.Prepend(10);
 
@@ -130,7 +130,7 @@ public class LnkListTests
     [Fact]
     public void Count_ManyElement()
     {
-        var ll = new LnkList<int>();
+        var ll = new DoublyLnkList<int>();
 
         ll.Append(10);
         ll.Append(20);
@@ -142,7 +142,7 @@ public class LnkListTests
     [Fact]
     public void ToEnumerable_Empty()
     {
-        var ll = new LnkList<int>();
+        var ll = new DoublyLnkList<int>();
 
         Assert.Equal(Array.Empty<int>(), ll.ToEnumerable());
     }
@@ -150,7 +150,7 @@ public class LnkListTests
     [Fact]
     public void ToEnumerable_OneElement()
     {
-        var ll = new LnkList<int>();
+        var ll = new DoublyLnkList<int>();
 
         ll.Append(1);
 
@@ -160,7 +160,7 @@ public class LnkListTests
     [Fact]
     public void ToEnumerable_ManyElement()
     {
-        var ll = new LnkList<int>();
+        var ll = new DoublyLnkList<int>();
 
         ll.Append(1);
         ll.Append(2);
@@ -168,11 +168,23 @@ public class LnkListTests
 
         Assert.Equal(new[] { 1, 2, 3 }, ll.ToEnumerable());
     }
+    
+    [Fact]
+    public void ToReversedEnumerable_ManyElement()
+    {
+        var ll = new DoublyLnkList<int>();
+
+        ll.Append(1);
+        ll.Append(2);
+        ll.Append(3);
+
+        Assert.Equal(new[] { 3, 2, 1 }, ll.ToReversedEnumerable());
+    }
 
     [Fact]
     public void ToEnumerable_Prepend()
     {
-        var ll = new LnkList<int>();
+        var ll = new DoublyLnkList<int>();
 
         ll.Append(1);
         ll.Prepend(2);
@@ -183,7 +195,7 @@ public class LnkListTests
     [Fact]
     public void RemoveAt_Empty()
     {
-        var list = new LnkList<string>();
+        var list = new DoublyLnkList<string>();
 
         Assert.False(list.RemoveAt(0));
     }
@@ -191,7 +203,7 @@ public class LnkListTests
     [Fact]
     public void RemoveAt_Many()
     {
-        var list = LnkList<string>.From("a", "b", "c");
+        var list = DoublyLnkList<string>.From("a", "b", "c");
 
         Assert.True(list.RemoveAt(1));
 
@@ -201,7 +213,7 @@ public class LnkListTests
     [Fact]
     public void RemoveAt_Last()
     {
-        var list = LnkList<string>.From("a", "b", "c");
+        var list = DoublyLnkList<string>.From("a", "b", "c");
 
         Assert.True(list.RemoveAt(2));
 
@@ -211,7 +223,7 @@ public class LnkListTests
     [Fact]
     public void RemoveAt_First()
     {
-        var list = LnkList<string>.From("a", "b", "c");
+        var list = DoublyLnkList<string>.From("a", "b", "c");
 
         Assert.True(list.RemoveAt(0));
 
@@ -221,7 +233,7 @@ public class LnkListTests
     [Fact]
     public void RemoveAt_NotFound()
     {
-        var list = LnkList<string>.From("a", "b", "c");
+        var list = DoublyLnkList<string>.From("a", "b", "c");
 
         Assert.False(list.RemoveAt(3));
 
@@ -231,7 +243,7 @@ public class LnkListTests
     [Fact]
     public void RemoveAt_NegativeIndex()
     {
-        var list = LnkList<string>.From("a", "b", "c");
+        var list = DoublyLnkList<string>.From("a", "b", "c");
 
         Assert.False(list.RemoveAt(-1));
 
@@ -241,7 +253,7 @@ public class LnkListTests
     [Fact]
     public void Remove_Empty()
     {
-        var list = new LnkList<string>();
+        var list = new DoublyLnkList<string>();
 
         Assert.False(list.Remove("a"));
     }
@@ -249,7 +261,7 @@ public class LnkListTests
     [Fact]
     public void Remove_FromMany()
     {
-        var list = LnkList<string>.From("a", "b", "c");
+        var list = DoublyLnkList<string>.From("a", "b", "c");
 
         Assert.True(list.Remove("b"));
 
@@ -259,7 +271,7 @@ public class LnkListTests
     [Fact]
     public void Remove_NotFound()
     {
-        var list = LnkList<string>.From("a", "b", "c");
+        var list = DoublyLnkList<string>.From("a", "b", "c");
 
         Assert.False(list.Remove("d"));
 
@@ -269,7 +281,7 @@ public class LnkListTests
     [Fact]
     public void Remove_Last()
     {
-        var list = LnkList<string>.From("a", "b", "c");
+        var list = DoublyLnkList<string>.From("a", "b", "c");
 
         Assert.True(list.Remove("c"));
 
@@ -279,7 +291,7 @@ public class LnkListTests
     [Fact]
     public void Remove_First()
     {
-        var list = LnkList<string>.From("a", "b", "c");
+        var list = DoublyLnkList<string>.From("a", "b", "c");
 
         Assert.True(list.Remove("a"));
 
