@@ -29,19 +29,22 @@ public class DoublyLnkList<T> : ILnkList<T>
         var node = new LnkNode(value);
         if(_last == null)
         {
-            _head = new LnkNode(value);
-            _last = _head;
+            _head = node;
         }
-        // _last = new LnkNode(value, null, _last);
-        node.Previous = _last;
+        else
+        {
+            node.Previous = _last;
+            _last.Next = node;
+        }
         _last = node;
+        // _last = new LnkNode(value, null, _last);
         Count += 1;
     }
 
     public T First()
     {
         if (_head == null)
-            throw new IndexOutOfRangeException();
+            throw new InvalidOperationException();
 
         return _head.Value!;
     }
@@ -121,6 +124,7 @@ public class DoublyLnkList<T> : ILnkList<T>
         {
             if (currentIndex == index)
             {
+                Count--;
                 return true;
             }
             currentIndex++;
@@ -132,16 +136,33 @@ public class DoublyLnkList<T> : ILnkList<T>
     public bool Remove(T value)
     {
         var current = _head;
-
-        while (current != null)
+        if(_head.Value.Equals(value))
         {
-            if(current.Value!.Equals(value))
-            {
-                return true;
-            }
-            current = current.Next;
+            _head = _head.Next;
+            Count--;
+            return true;
         }
-        return false;
+        if (_last.Value.Equals(value))
+        {
+            _last = _last.Previous;
+            Count--;
+            return true;
+        }
+        else
+        {
+            while (current != null)
+            {
+                if (current.Value!.Equals(value))
+                {
+                    current.Previous = current.Next;
+                    current.Next = current.Previous;
+
+                    Count--;
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     public class LnkNode
@@ -158,4 +179,3 @@ public class DoublyLnkList<T> : ILnkList<T>
         }
     }
 }
-
