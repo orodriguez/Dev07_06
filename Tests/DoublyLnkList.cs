@@ -1,3 +1,5 @@
+using System.Collections;
+
 namespace Tests;
 
 public class DoublyLnkList<T> : ILnkList<T>
@@ -54,5 +56,15 @@ public class DoublyLnkList<T> : ILnkList<T>
     public bool Remove(T value)
     {
         throw new NotImplementedException();
+    }
+
+    public IEnumerator<T> GetEnumerator()
+    {
+        throw new NotImplementedException();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 }
