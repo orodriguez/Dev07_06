@@ -12,20 +12,27 @@ public class LnkList<T> : ILnkList<T>
     
     private LnkNode? _head;
 
-    public LnkList() => 
+    public int Count { get; private set; }
+
+    public LnkList()
+    {
         _head = null;
+        Count = 0;
+    }
 
     // O(1)
-
     public void Prepend(T value)
     {
         if (_head == null)
         {
             _head = new LnkNode(value);
+            Count++;
             return;
         }
 
         _head = new LnkNode(value, _head);
+
+        Count++;
     }
 
 
@@ -36,6 +43,7 @@ public class LnkList<T> : ILnkList<T>
         if (_head == null)
         {
             _head = new LnkNode(value);
+            Count++;
             return;
         }
 
@@ -44,6 +52,7 @@ public class LnkList<T> : ILnkList<T>
             current = current.Next;
         
         current.Next = new LnkNode(value);
+        Count++;
     }
     
     // O(1)
@@ -97,22 +106,6 @@ public class LnkList<T> : ILnkList<T>
     }
 
     // O(n)
-    public int Count()
-    {
-        var result = 0;
-
-        var current = _head;
-
-        while (current != null)
-        {
-            result++;
-            current = current.Next;
-        }
-
-        return result;
-    }
-
-    // O(n)
     public IEnumerable<T> ToEnumerable()
     {
         var result = new List<T>();
@@ -141,6 +134,7 @@ public class LnkList<T> : ILnkList<T>
         if (index == 0)
         {
             _head = _head.Next;
+            Count--;
             return true;
         }
 
@@ -155,6 +149,7 @@ public class LnkList<T> : ILnkList<T>
             {
                 var nextNode = current.Next;
                 current.Next = nextNode.Next;
+                Count--;
                 return true;
             }
 
@@ -174,6 +169,7 @@ public class LnkList<T> : ILnkList<T>
         if (_head.ValueEquals(value))
         {
             _head = _head.Next;
+            Count--;
             return true;
         }
 
@@ -183,6 +179,7 @@ public class LnkList<T> : ILnkList<T>
             if (current.NextValueEquals(value))
             {
                 current.Next = current.Next.Next;
+                Count--;
                 return true;
             }
 

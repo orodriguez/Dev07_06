@@ -34,10 +34,7 @@ public class DoublyLnkList<T> : ILnkList<T>
         throw new NotImplementedException();
     }
 
-    public int Count()
-    {
-        throw new NotImplementedException();
-    }
+    public int Count => throw new NotImplementedException();
 
     public IEnumerable<T> ToEnumerable()
     {

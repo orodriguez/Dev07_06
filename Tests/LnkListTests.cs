@@ -114,7 +114,7 @@ public class LnkListTests
     {
         var ll = new LnkList<int>();
 
-        Assert.Equal(0, ll.Count());
+        Assert.Equal(0, ll.Count);
     }
 
     [Fact]
@@ -124,7 +124,7 @@ public class LnkListTests
 
         ll.Prepend(10);
 
-        Assert.Equal(1, ll.Count());
+        Assert.Equal(1, ll.Count);
     }
 
     [Fact]
@@ -136,7 +136,69 @@ public class LnkListTests
         ll.Append(20);
         ll.Append(30);
 
-        Assert.Equal(3, ll.Count());
+        Assert.Equal(3, ll.Count);
+    }
+    
+    [Fact]
+    public void Count_AfterAppend()
+    {
+        var ll = new LnkList<string>();
+        ll.Append("a");
+        
+        Assert.Equal(1, ll.Count);
+    }
+    
+    [Fact]
+    public void Count_AfterPrepend()
+    {
+        var ll = new LnkList<string>();
+        ll.Prepend("a");
+        
+        Assert.Equal(1, ll.Count);
+    }
+    
+    [Fact]
+    public void Count_AfterRemoveAt()
+    {
+        var ll = new LnkList<string>();
+        ll.Prepend("a");
+        ll.RemoveAt(0);
+        
+        Assert.Equal(0, ll.Count);
+    }
+    
+    [Fact]
+    public void Count_AfterRemoveAtMany()
+    {
+        var ll = new LnkList<string>();
+        ll.Append("a");
+        ll.Append("b");
+        ll.Append("c");
+        ll.RemoveAt(1);
+        
+        Assert.Equal(2, ll.Count);
+    }
+    
+    [Fact]
+    public void Count_AfterRemove()
+    {
+        var ll = new LnkList<string>();
+        ll.Prepend("a");
+        ll.Remove("a");
+        
+        Assert.Equal(0, ll.Count);
+    }
+    
+    [Fact]
+    public void Count_AfterRemoveMany()
+    {
+        var ll = new LnkList<string>();
+        ll.Append("a");
+        ll.Append("b");
+        ll.Append("c");
+        ll.Remove("b");
+        
+        Assert.Equal(2, ll.Count);
     }
 
     [Fact]
