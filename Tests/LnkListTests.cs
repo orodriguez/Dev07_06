@@ -206,7 +206,7 @@ public class LnkListTests
     {
         var ll = new LnkList<int>();
 
-        Assert.Equal(Array.Empty<int>(), ll.ToEnumerable());
+        Assert.Equal(Array.Empty<int>(), ll);
     }
 
     [Fact]
@@ -216,7 +216,7 @@ public class LnkListTests
 
         ll.Append(1);
 
-        Assert.Equal(new[] { 1 }, ll.ToEnumerable());
+        Assert.Equal(new[] { 1 }, ll);
     }
 
     [Fact]
@@ -228,7 +228,7 @@ public class LnkListTests
         ll.Append(2);
         ll.Append(3);
 
-        Assert.Equal(new[] { 1, 2, 3 }, ll.ToEnumerable());
+        Assert.Equal(new[] { 1, 2, 3 }, ll);
     }
 
     [Fact]
@@ -239,7 +239,7 @@ public class LnkListTests
         ll.Append(1);
         ll.Prepend(2);
 
-        Assert.Equal(new[] { 2, 1 }, ll.ToEnumerable());
+        Assert.Equal(new[] { 2, 1 }, ll);
     }
 
     [Fact]
@@ -257,7 +257,7 @@ public class LnkListTests
 
         Assert.True(list.RemoveAt(1));
 
-        Assert.Equal(new[] { "a", "c" }, list.ToEnumerable());
+        Assert.Equal(new[] { "a", "c" }, list);
     }
 
     [Fact]
@@ -267,7 +267,7 @@ public class LnkListTests
 
         Assert.True(list.RemoveAt(2));
 
-        Assert.Equal(new[] { "a", "b" }, list.ToEnumerable());
+        Assert.Equal(new[] { "a", "b" }, list);
     }
     
     [Fact]
@@ -277,7 +277,7 @@ public class LnkListTests
 
         Assert.True(list.RemoveAt(0));
 
-        Assert.Equal(new[] { "b", "c" }, list.ToEnumerable());
+        Assert.Equal(new[] { "b", "c" }, list);
     }
 
     [Fact]
@@ -287,7 +287,7 @@ public class LnkListTests
 
         Assert.False(list.RemoveAt(3));
 
-        Assert.Equal(new[] { "a", "b", "c" }, list.ToEnumerable());
+        Assert.Equal(new[] { "a", "b", "c" }, list);
     }
 
     [Fact]
@@ -297,7 +297,7 @@ public class LnkListTests
 
         Assert.False(list.RemoveAt(-1));
 
-        Assert.Equal(new[] { "a", "b", "c" }, list.ToEnumerable());
+        Assert.Equal(new[] { "a", "b", "c" }, list);
     }
 
     [Fact]
@@ -315,7 +315,7 @@ public class LnkListTests
 
         Assert.True(list.Remove("b"));
 
-        Assert.Equal(new[] { "a", "c" }, list.ToEnumerable());
+        Assert.Equal(new[] { "a", "c" }, list);
     }
 
     [Fact]
@@ -325,7 +325,7 @@ public class LnkListTests
 
         Assert.False(list.Remove("d"));
 
-        Assert.Equal(new[] { "a", "b", "c" }, list.ToEnumerable());
+        Assert.Equal(new[] { "a", "b", "c" }, list);
     }
     
     [Fact]
@@ -335,7 +335,7 @@ public class LnkListTests
 
         Assert.True(list.Remove("c"));
 
-        Assert.Equal(new[] { "a", "b" }, list.ToEnumerable());
+        Assert.Equal(new[] { "a", "b" }, list);
     }
     
     [Fact]
@@ -345,6 +345,29 @@ public class LnkListTests
 
         Assert.True(list.Remove("a"));
 
-        Assert.Equal(new[] { "b", "c" }, list.ToEnumerable());
+        Assert.Equal(new[] { "b", "c" }, list);
+    }
+
+    [Fact]
+    public void Enumerate()
+    {
+        var list = LnkList<char>.From('a', 'b', 'c');
+
+        var result = "";
+        
+        foreach (var value in list) 
+            result += value;
+
+        Assert.Equal("abc", result);
+    }
+    
+    [Fact]
+    public void Enumerate_Where()
+    {
+        var list = LnkList<int>.From(1, 2, 3, 4);
+
+        var result = list.Where(c => c < 3);
+
+        Assert.Equal(new[] { 1, 2 }, result);
     }
 }
