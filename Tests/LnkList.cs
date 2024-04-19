@@ -64,24 +64,15 @@ public class LnkList<T> : ILnkList<T>, IEnumerable<T>
     {
         // Ω(1)
         if (_head == null)
-            throw new IndexOutOfRangeException();
+            throw new InvalidOperationException();
         
-        // Ω(1)
-        if (index < 0)
-            throw new IndexOutOfRangeException();
-        
-        var currentIndex = 0;
-        var current = _head;
-        while (current != null)
-        {
-            if (currentIndex == index)
-                return current.Value;
-            
-            currentIndex++;
-            current = current.Next;
-        }
-
-        throw new IndexOutOfRangeException();
+        return _head.Value;
+    }
+    
+    // O(?)
+    public int Get(int index)
+    {
+        throw new NotImplementedException();
     }
     
     // O(n)
