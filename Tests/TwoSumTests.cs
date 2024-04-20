@@ -13,7 +13,7 @@ public class TwoSumTests
     [Fact]
     public void Test2()
     {
-        Assert.Equal(new[] { 1, 4 },
+        Assert.Equal(new[] { 1, 2 },
             TwoSum(new[] { 3, 2, 4 }, 6));
     }
 
