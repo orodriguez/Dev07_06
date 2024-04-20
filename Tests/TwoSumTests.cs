@@ -21,7 +21,7 @@ public class TwoSumTests
     public void Test3()
     {
         Assert.Equal(new[] { 0, 1 },
-            TwoSum(new[] { 3, 6 }, 6));
+            TwoSum(new[] { 3, 3 }, 6));
     }
 
     private int[] TwoSum(int[] nums, int target)
