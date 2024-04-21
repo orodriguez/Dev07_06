@@ -6,7 +6,7 @@ public class TwoSumTests
     [Fact]
     public void Test1()
     {
-        Assert.Equal(new[] { 0, 1 },
+        Assert.Equal(new[] { 0, 2 },
             TwoSum(new[] { 2, 6, 7, 11, 15 }, 9));
     }
 
@@ -24,8 +24,16 @@ public class TwoSumTests
             TwoSum(new[] { 3, 3 }, 6));
     }
 
-    private int[] TwoSum(int[] nums, int target)
+    private static int[] TwoSum(int[] nums, int target)
     {
-        throw new NotImplementedException();
+        Dictionary<int, int> myDictionary = new ();
+        for (var i = 0; i < nums.Length; i++) {
+            if (myDictionary.ContainsKey(target - nums[i]))
+                return new int[] {myDictionary[target - nums[i]], i};
+            
+            myDictionary[nums[i]] = i;
+        }
+
+        return [];
     }
 }
