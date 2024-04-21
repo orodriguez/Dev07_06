@@ -24,7 +24,7 @@ public class TwoSumTests
             TwoSum(new[] { 3, 3 }, 6));
     }
 
-    private static int[] TwoSum(int[] nums, int target)
+    private int[] TwoSum(int[] nums, int target)
     {
         Dictionary<int, int> myDictionary = new ();
         for (var i = 0; i < nums.Length; i++) {
