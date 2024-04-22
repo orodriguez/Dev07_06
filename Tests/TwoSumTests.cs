@@ -6,8 +6,8 @@ public class TwoSumTests
     [Fact]
     public void Test1()
     {
-        Assert.Equal(new[] { 0, 2 },
-            TwoSum(new[] { 2, 6, 7, 11, 15 }, 9));
+        Assert.Equal(new[] { 0, 1 },
+            TwoSum(new[] { 2, 7, 11, 15 }, 9));
     }
 
     [Fact]
@@ -26,14 +26,16 @@ public class TwoSumTests
 
     private int[] TwoSum(int[] nums, int target)
     {
-        Dictionary<int, int> myDictionary = new ();
-        for (var i = 0; i < nums.Length; i++) {
-            if (myDictionary.ContainsKey(target - nums[i]))
-                return new int[] {myDictionary[target - nums[i]], i};
-            
-            myDictionary[nums[i]] = i;
+        var seen = new Dictionary<int, int>();
+        for (var i = 0; i < nums.Length; i++)
+        {
+            var current = nums[i];
+            var complement = target - current;
+            if (seen.TryGetValue(complement, out var seenValue))
+                return new[] { seenValue, i };
+            seen[current] = i;
         }
 
-        return [];
+        return Array.Empty<int>();
     }
 }
