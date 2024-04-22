@@ -15,7 +15,7 @@ public class HashMapTests
     }
     
     [Fact]
-    public void WeekDays()
+    public void Collision()
     {
         var hashMap = new HashMap<string, int>(capacity: 2);
         
