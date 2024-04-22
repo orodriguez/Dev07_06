@@ -13,7 +13,11 @@ public class HashMap<TKey, TValue> where TKey : notnull
             _buckets[i] = new Bucket();
     }
 
-    public TValue this[TKey key] => Get(key);
+    public TValue this[TKey key]
+    {
+        get => Get(key);
+        set => Add(key, value);
+    }
 
     // Best(1) | Worst(n) | O(1)
     private TValue Get(TKey key)
@@ -33,6 +37,12 @@ public class HashMap<TKey, TValue> where TKey : notnull
     private int Hash(TKey key) => 
         Math.Abs(key.GetHashCode()) % _capacity;
 
+    public bool Contains(TKey key)
+    {
+        var bucket = _buckets[Hash(key)];
+        return bucket.Contains(key);
+    }
+
     private class Bucket
     {
         private readonly LinkedList<(TKey Key, TValue Value)> _values;
@@ -47,5 +57,8 @@ public class HashMap<TKey, TValue> where TKey : notnull
         public void Add(TKey key, TValue value) =>
             // O(1)
             _values.AddLast((key, value));
+
+        public bool Contains(TKey key) => 
+            _values.Any(pair => pair.Key.Equals(key));
     }
 }
