@@ -19,6 +19,9 @@ public class HashMap<TKey, TValue> where TKey : notnull
         set => Add(key, value);
     }
 
+    public IEnumerable<TKey> Keys() => 
+        _buckets.SelectMany(bucket => bucket.Keys());
+
     // Best(1) | Worst(n) | O(1)
     private TValue Get(TKey key)
     {
@@ -43,6 +46,12 @@ public class HashMap<TKey, TValue> where TKey : notnull
         return bucket.Contains(key);
     }
 
+    public bool Remove(TKey key)
+    {
+        var bucket = _buckets[Hash(key)];
+        return bucket.Remove(key);
+    }
+
     private class Bucket
     {
         private readonly LinkedList<(TKey Key, TValue Value)> _values;
@@ -60,5 +69,14 @@ public class HashMap<TKey, TValue> where TKey : notnull
 
         public bool Contains(TKey key) => 
             _values.Any(pair => pair.Key.Equals(key));
+
+        public bool Remove(TKey key)
+        {
+            var value = Get(key);
+            return _values.Remove((key, value));
+        }
+
+        public IEnumerable<TKey> Keys() => 
+            _values.Select(pair => pair.Key);
     }
 }

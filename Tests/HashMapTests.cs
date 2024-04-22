@@ -61,4 +61,33 @@ public class HashMapTests
         var hashMap = new HashMap<string, double>();
         Assert.False(hashMap.Contains("bar"));
     }
+
+    [Fact]
+    public void Remove()
+    {
+        var hashMap = new HashMap<string, int>
+        {
+            ["Foo"] = 1,
+            ["Bar"] = 2
+        };
+
+        Assert.True(hashMap.Remove("Foo"));
+        Assert.False(hashMap.Contains("Foo"));
+    }
+
+    [Fact]
+    public void Keys()
+    {
+        var hashMap = new HashMap<string, int>(capacity: 2)
+        {
+            ["Foo"] = 1,
+            ["Bar"] = 2,
+            ["Car"] = 3,
+        };
+        
+        Assert.Equal(new[] { "Bar", "Car", "Foo" }, 
+            hashMap.Keys().Order());
+    }
+    
+    // TODO: override keys
 }
