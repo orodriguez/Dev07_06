@@ -1,6 +1,8 @@
+using System.Collections;
+
 namespace Tests;
 
-public class HashMap<TKey, TValue> where TKey : notnull
+public class HashMap<TKey, TValue> : IEnumerable<(TKey Key, TValue Value)> where TKey : notnull
 {
     private readonly int _capacity;
     private readonly Bucket[] _buckets;
@@ -52,16 +54,32 @@ public class HashMap<TKey, TValue> where TKey : notnull
         return bucket.Remove(key);
     }
 
-    private class Bucket
+    public IEnumerable<TValue> Values() => 
+        _buckets.SelectMany(bucket => bucket.Values());
+
+    public IEnumerator<(TKey Key, TValue Value)> GetEnumerator() => 
+        AsEnumerable().GetEnumerator();
+
+    // O(n)
+    private IEnumerable<(TKey key, TValue Value)> AsEnumerable()
     {
-        private readonly LinkedList<(TKey Key, TValue Value)> _values;
+        foreach (var bucket in _buckets)
+        foreach (var pair in bucket)
+            yield return pair;
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    private class Bucket : IEnumerable<(TKey Key, TValue Value)>
+    {
+        private readonly LinkedList<(TKey Key, TValue Value)> _pairs;
 
         public Bucket() => 
-            _values = new LinkedList<(TKey, TValue)>();
+            _pairs = new LinkedList<(TKey, TValue)>();
 
         public TValue Get(TKey key) =>
             // O(n)
-            _values.First(pair => pair.Key.Equals(key)).Value;
+            _pairs.First(pair => pair.Key.Equals(key)).Value;
 
         public void Add(TKey key, TValue value)
         {
@@ -72,19 +90,28 @@ public class HashMap<TKey, TValue> where TKey : notnull
                 Remove(key);
             
             // O(1)
-            _values.AddLast((key, value));
+            _pairs.AddLast((key, value));
         }
 
         public bool Contains(TKey key) => 
-            _values.Any(pair => pair.Key.Equals(key));
+            _pairs.Any(pair => pair.Key.Equals(key));
 
         public bool Remove(TKey key)
         {
             var value = Get(key);
-            return _values.Remove((key, value));
+            return _pairs.Remove((key, value));
         }
 
         public IEnumerable<TKey> Keys() => 
-            _values.Select(pair => pair.Key);
+            _pairs.Select(pair => pair.Key);
+
+        public IEnumerable<TValue> Values() => 
+            _pairs.Select(pair => pair.Value);
+
+        public IEnumerator<(TKey Key, TValue Value)> GetEnumerator() => 
+            _pairs.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => 
+            GetEnumerator();
     }
 }

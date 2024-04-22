@@ -100,4 +100,51 @@ public class HashMapTests
         Assert.Equal(new[] { "Bar", "Car", "Foo" }, 
             hashMap.Keys().Order());
     }
+    
+    [Fact]
+    public void Values()
+    {
+        var hashMap = new HashMap<string, int>(capacity: 2)
+        {
+            ["Foo"] = 1,
+            ["Bar"] = 2,
+            ["Car"] = 3,
+        };
+        
+        Assert.Equal(new[] { 1, 2, 3 }, 
+            hashMap.Values().Order());
+    }
+    
+    [Fact]
+    public void Foreach()
+    {
+        var hashMap = new HashMap<string, int>
+        {
+            ["Foo"] = 1,
+            ["Bar"] = 2,
+            ["Car"] = 3,
+        };
+
+        var result = 0;
+
+        foreach (var pair in hashMap) 
+            result += pair.Value;
+
+        Assert.Equal(6, result);
+    }
+    
+    [Fact]
+    public void Sum()
+    {
+        var hashMap = new HashMap<string, int>
+        {
+            ["Foo"] = 1,
+            ["Bar"] = 2,
+            ["Car"] = 3,
+        };
+
+        var result = hashMap.Sum(pair => pair.Value);
+
+        Assert.Equal(6, result);
+    }
 }
