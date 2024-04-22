@@ -3,7 +3,7 @@ namespace Tests;
 public class HashMapTests
 {
     [Fact]
-    public void ThreeElements_10Capacity()
+    public void Get_ThreeElements_10Capacity()
     {
         var hashMap = new HashMap<string, int>(capacity: 10);
         
@@ -15,7 +15,7 @@ public class HashMapTests
     }
     
     [Fact]
-    public void Collision()
+    public void Get_Collision()
     {
         var hashMap = new HashMap<string, int>(capacity: 2);
         
@@ -29,7 +29,7 @@ public class HashMapTests
     }
     
     [Fact]
-    public void Chars()
+    public void Get_Chars()
     {
         var hashMap = new HashMap<char, int>(capacity: 2);
         
