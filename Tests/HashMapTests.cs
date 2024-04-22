@@ -45,6 +45,18 @@ public class HashMapTests
     }
     
     [Fact]
+    public void Get_Override()
+    {
+        var hashMap = new HashMap<char, int>(capacity: 2)
+        {
+            ['M'] = 20,
+            ['M'] = 25
+        };
+
+        Assert.Equal(25, hashMap['M']);
+    }
+    
+    [Fact]
     public void Contains()
     {
         var hashMap = new HashMap<string, double>
@@ -88,6 +100,4 @@ public class HashMapTests
         Assert.Equal(new[] { "Bar", "Car", "Foo" }, 
             hashMap.Keys().Order());
     }
-    
-    // TODO: override keys
 }

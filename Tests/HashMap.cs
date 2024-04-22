@@ -63,9 +63,17 @@ public class HashMap<TKey, TValue> where TKey : notnull
             // O(n)
             _values.First(pair => pair.Key.Equals(key)).Value;
 
-        public void Add(TKey key, TValue value) =>
+        public void Add(TKey key, TValue value)
+        {
+            // Best(1)
+            // O(n)
+            // O(n / capacity)
+            if (Contains(key))
+                Remove(key);
+            
             // O(1)
             _values.AddLast((key, value));
+        }
 
         public bool Contains(TKey key) => 
             _values.Any(pair => pair.Key.Equals(key));
