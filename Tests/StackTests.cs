@@ -24,4 +24,16 @@ public class StackTests
         
         Assert.Throws<InvalidOperationException>(() => s.Pop());
     }
+
+    [Fact]
+    public void AsEnumerable()
+    {
+        var s = new Stack<int>();
+        
+        s.Push(1);
+        s.Push(2);
+        s.Push(3);
+        
+        Assert.Equal(new[] { 1, 2, 3}, s);
+    }
 }
