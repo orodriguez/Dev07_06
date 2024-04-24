@@ -120,4 +120,23 @@ public class TreeTests
             },
             result);
     }
+
+    [Fact]
+    public void Level()
+    {
+        var tree = new Tree<string>("SuperMarket");
+
+        tree.Add("Vegetable", node => 
+            Assert.Equal(1, node.Level()));
+    }
+    
+    [Fact]
+    public void Level_2()
+    {
+        var tree = new Tree<string>("SuperMarket");
+
+        tree.Add("Vegetable", vegetables => 
+            vegetables.Add("Tomato", tomato => 
+                Assert.Equal(2, tomato.Level())));
+    }
 }

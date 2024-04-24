@@ -12,8 +12,8 @@ public class Tree<T>
 
     public int Count() => _root?.Count() ?? 0;
 
-    public Tree<T> Add(T value) =>
-        Add(new TreeNode(value));
+    public Tree<T> Add(T value) => 
+        Add(new TreeNode(value, _root));
 
     private Tree<T> Add(TreeNode node)
     {
@@ -43,12 +43,14 @@ public class Tree<T>
 
     public class TreeNode
     {
-        public T Value { get; set; }
+        private T Value { get; set; }
+        private TreeNode? Parent { get; set; }
         private IList<TreeNode> Children { get; set; }
 
-        public TreeNode(T value)
+        public TreeNode(T value, TreeNode? parent = null)
         {
             Value = value;
+            Parent = parent;
             Children = new List<TreeNode>();
         }
 
@@ -66,7 +68,7 @@ public class Tree<T>
 
         public TreeNode Add(T value, Action<TreeNode> action)
         {
-            var node = new TreeNode(value);
+            var node = new TreeNode(value, this);
             Add(node);
             action(node);
             return this;
@@ -86,6 +88,14 @@ public class Tree<T>
                 child.TraversePostOrder(action);
             
             action(Value);
+        }
+
+        public int Level()
+        {
+            if (Parent == null)
+                return 1;
+            
+            return Parent.Level() + 1;
         }
     }
 }
