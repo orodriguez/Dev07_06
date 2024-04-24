@@ -60,4 +60,24 @@ public class TreeNodeTests
 
         Assert.Equal(7, tree.Count());
     }
+
+    [Fact]
+    public void TraversePreorder()
+    {
+        var tree = new Tree<string>("SuperMarket");
+
+        tree
+            .Add("Vegetables", vegetables =>
+            {
+                vegetables.Add("Tomato");
+                vegetables.Add("Lettuce");
+            });
+
+        var result = new List<string>();
+
+        tree.TraversePreOrder(value => result.Add(value));
+
+        Assert.Equal(new[] { "SuperMarket", "Vegetables", "Tomato", "Lettuce" },
+            result);
+    }
 }
