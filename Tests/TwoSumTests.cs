@@ -6,8 +6,8 @@ public class TwoSumTests
     [Fact]
     public void Test1()
     {
-        Assert.Equal(new[] { 0, 2 },
-            TwoSum(new[] { 2, 6, 7, 11, 15 }, 9));
+        Assert.Equal(new[] { 0, 1 },
+            TwoSum(new[] { 2, 7, 11, 15 }, 9));
     }
 
     [Fact]
@@ -26,47 +26,16 @@ public class TwoSumTests
 
     private int[] TwoSum(int[] nums, int target)
     {
-        // for (int i = 0; i < nums.Length; i++)
-        // {
-        //     if (nums[i] < target)
-        //     {
-        //         for (int j = i + 1; j  < nums.Length; j++)
-        //         {
-        //             if(nums[i] + nums[j] == target)
-        //             {
-        //                 return [i, j];
-        //             }
-        //         }
-        //     }
-        // }
-        // return[];
-
-
-        //Dictionary<int, int> numberDictionary = new Dictionary<int, int>();
-        //for (int i = 0; i < nums.Length; i++)
-        //{
-        //    numberDictionary[nums[i]] = i;
-        //}
-        //for (int i = 0; i < nums.Length; i++)
-        //{
-        //    int needed = target - nums[i];
-        //    if (numberDictionary.ContainsKey(needed) && numberDictionary[needed] != i)
-        //    {
-        //        return [i, numberDictionary[needed]];
-        //    }
-        //}
-        //return [];
-
-        Dictionary<int, int> numberDictionary = new Dictionary<int, int>();
-        for (int i = 0; i < nums.Length; i++) 
+        var seen = new Dictionary<int, int>();
+        for (var i = 0; i < nums.Length; i++)
         {
-            int needed = target - nums[i];
-            if (numberDictionary.TryGetValue(needed, out var neededValue))
-            {
-                return [neededValue, i];
-            }
-            numberDictionary[nums[i]] = i;
+            var current = nums[i];
+            var complement = target - current;
+            if (seen.TryGetValue(complement, out var seenValue))
+                return new[] { seenValue, i };
+            seen[current] = i;
         }
-        return [];
+
+        return Array.Empty<int>();
     }
 }
