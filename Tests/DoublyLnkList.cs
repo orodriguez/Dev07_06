@@ -1,279 +1,233 @@
-using System.Collections;
+using System.Text.RegularExpressions;
 
-namespace Tests;
-
-public class DoublyLnkList<T> : ILnkList<T>
+namespace Tests
 {
-    public static DoublyLnkList<T> From(params T[] values)
+    public class DoublyLnkList<T> : ILnkList<T>
     {
-        var list = new DoublyLnkList<T>();
-
-        foreach (var value in values)
-            list.Append(value);
-
-        return list;
-    }
-
-    private DoublyLnkNode? _head;
-    private DoublyLnkNode? _last;
-
-    public int Count { get; private set; }
-
-    public DoublyLnkList()
-    {
-        _head = null;
-        _last = null;
-    }
-
-    public void Prepend(T value)
-    {
-        if (_head == null)
+        private class LnkNode
         {
-            _head = new DoublyLnkNode(value);
-            _last = _head;
-            Count++;
-            return;
-        }
+            public T Value { get; }
+            public LnkNode? Next { get; set; }
+            public LnkNode? Preview { get; set; }
 
-        _head = new DoublyLnkNode(value, _head);
-
-        Count++;
-    }
-
-    // O(1)
-    public void Append(T value)
-    {
-        if (_head == null)
-        {
-            _head = new DoublyLnkNode(value);
-            _last = _head;
-            Count++;
-            return;
-        }
-
-        _last = new DoublyLnkNode(value, next: null, previous: _last);
-        Count++;
-    }
-
-    public T this[int index] => Get(index);
-
-    public T Get(int index)
-    {
-        // Ω(1)
-        if (_head == null)
-            throw new IndexOutOfRangeException();
-
-        // Ω(1)
-        if (index < 0)
-            throw new IndexOutOfRangeException();
-
-        // O(1)
-        if (index == Count - 1 && _last != null)
-            return _last.Value;
-
-        var currentIndex = 0;
-
-        foreach (var value in this)
-        {
-            if (currentIndex == index)
-                return value;
-            currentIndex++;
-        }
-
-        throw new IndexOutOfRangeException();
-    }
-
-    public IEnumerable<T> ToReversedEnumerable()
-    {
-        var result = new List<T>();
-        var current = _last;
-        while (current != null)
-        {
-            result.Add(current.Value);
-            current = current.Previous;
-        }
-
-        return result;
-    }
-
-    public bool RemoveAt(int index)
-    {
-        // Ω(1)
-        if (index < 0)
-            return false;
-
-        // Ω(1)
-        if (_head == null)
-            return false;
-
-        // Ω(1)
-        if (index == 0)
-        {
-            _head = _head.Next;
-
-            if (_head != null)
-                _head.Previous = null;
-
-            Count--;
-            return true;
-        }
-
-        if (index == Count - 1 && _last != null)
-        {
-            _last = _last.Previous;
-            
-            if (_last != null)
-                _last.Next = null;
-
-            return true;
-        }
-
-        var currentIndex = 0;
-        var current = _head;
-
-        // Ω(1)
-        // O(n - 1)
-        while (current != null)
-        {
-            if (currentIndex == index)
+            public LnkNode(T value, LnkNode? next = null, LnkNode? preview = null)
             {
-                if (current.Next != null)
-                    current.Next.Previous = current.Previous;
-
-                if (current.Previous != null)
-                    current.Previous.Next = current.Next;
-
-                Count--;
-                return true;
+                Value = value;
+                Next = next;
+                Preview = preview;
             }
 
-            currentIndex++;
-            current = current.Next;
+            public bool NextValueEquals(T value) =>
+                Next != null && Next.ValueEquals(value);
+
+            public bool ValueEquals(T value) =>
+                Value != null && Value.Equals(value);
         }
 
-        return false;
-    }
+        private LnkNode? _head;
+        private LnkNode? _last;
+        private int _count;
 
-    public bool Remove(T value)
-    {
-        if (_head == null)
-            return false;
-
-        if (_head.ValueEquals(value))
+        public static DoublyLnkList<T> From(params T[] values)
         {
-            _head = _head.Next;
+            var list = new DoublyLnkList<T>();
+            foreach (var value in values)
+                list.Append(value);
+            return list;
+        }
 
-            if (_head != null)
-                _head.Previous = null;
-
-            Count--;
-            return true;
+        public void Prepend(T value)
+        {
+            var newNode = new LnkNode(value);
+            if (_head == null)
+            {
+                _head = newNode;
+                _last = newNode;
+            }
+            else
+            {
+                newNode.Next = _head;
+                _head.Preview = newNode;
+                _head = newNode;
+            }
+            _count++;
         }
         
-        if (_last != null && _last.ValueEquals(value))
+        public void Append(T value)
         {
-            _last = _last.Previous;
-            
-            if (_last != null)
-                _last.Next = null;
-
-            return true;
+            var newNode = new LnkNode(value);
+            if (_head == null)
+            {
+                _head = newNode;
+                _last = newNode;
+            }
+            else
+            {
+                newNode.Preview = _last;
+                _last!.Next = newNode;
+                _last = newNode;
+            }
+            _count++;
         }
 
-        var current = _head;
-        while (current != null)
+        public T First()
         {
-            if (current.ValueEquals(value))
+            if (_head == null)
             {
-                if (current.Previous != null)
-                    current.Previous.Next = current.Next;
+                throw new InvalidOperationException("The list is empty.");
+            }
+            return _head.Value;
+        }
 
-                if (current.Next != null)
-                    current.Next.Previous = current.Previous;
+        public bool Any(Func<T, bool> compare)
+        {
+            var current = _head;
+            while (current != null)
+            {
+                if (compare(current.Value))
+                {
+                    return true;
+                }
+                current = current.Next;
+            }
+            return false;
+        }
 
-                Count--;
-                return true;
+        public T this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= _count)
+                {
+                    throw new IndexOutOfRangeException("Índice fuera de rango.");
+                }
+                LnkNode current = _head!;
+                for (int i = 0; i < index; i++)
+                {
+                    current = current.Next!;
+                }
+                return current.Value;
+            }
+        }
+
+        public T Get(int index)
+        {
+            if (index < 0 || index >= _count)
+            {
+                throw new IndexOutOfRangeException("Index is out of range.");
+            }
+            var current = _head;
+            for (int i = 0; i < index; i++)
+            {
+                current = current!.Next;
+            }
+            return current!.Value;
+        }
+
+        public int Count()
+        {
+            return _count;
+        }
+
+        public IEnumerable<T> ToEnumerable()
+        {
+            List<T> list = new List<T>();
+            var current = _head;
+            while (current != null)
+            {
+                list.Add(current.Value!);
+                current = current.Next;
+            }
+            return list;
+        }
+
+        public IEnumerable<T> ToReversedEnumerable()
+        {
+            List<T> list = new List<T>();
+            var current = _last;
+
+            while (current != null)
+            {
+                list.Add(current.Value!);
+                current = current.Preview;
+            }
+            return list;
+        }
+
+        public bool RemoveAt(int index)
+        {
+            if (index < 0 || index >= _count)
+            {
+                return false;
             }
 
-            current = current.Next;
-        }
+            if (index == 0)
+            {
+                _head = _head!.Next;
+                if (_head != null)
+                {
+                    _head.Preview = null;
+                }
+                else
+                {
+                    _last = null;
+                }
+            }
+            else if (index == _count - 1)
+            {
+                _last = _last!.Preview;
+                _last!.Next = null;
+            }
+            else
+            {
+                LnkNode current = _head!;
+                for (int i = 0; i < index - 1; i++)
+                {
+                    current = current.Next!;
+                }
+                current.Next = current.Next!.Next;
+                current.Next!.Preview = current;
+            }
 
-        return false;
-    }
-
-    public IEnumerator<T> GetEnumerator() =>
-        new NodeEnumerator(_head);
-
-    IEnumerator IEnumerable.GetEnumerator() =>
-        GetEnumerator();
-
-    public T Last()
-    {
-        if (_last == null)
-            throw new InvalidOperationException();
-
-        return _last.Value;
-    }
-
-    private class DoublyLnkNode
-    {
-        public T Value { get; }
-        public DoublyLnkNode? Next { get; set; }
-        public DoublyLnkNode? Previous { get; set; }
-
-        public DoublyLnkNode(T value,
-            DoublyLnkNode? next = null,
-            DoublyLnkNode? previous = null)
-        {
-            Value = value;
-            Next = next;
-            Previous = previous;
-
-            if (next != null)
-                next.Previous = this;
-
-            if (previous != null)
-                previous.Next = this;
-        }
-
-        public bool NextValueEquals(T value) =>
-            Next != null && Next.ValueEquals(value);
-
-        public bool ValueEquals(T value) =>
-            Value != null && Value.Equals(value);
-
-        public void AddAfter(T value) =>
-            Next = new DoublyLnkNode(value, next: null, previous: this);
-    }
-
-    private class NodeEnumerator : IEnumerator<T>
-    {
-        private readonly DoublyLnkNode _head;
-        private DoublyLnkNode _currentNode;
-
-        public NodeEnumerator(DoublyLnkNode node)
-        {
-            _head = node;
-            _currentNode = new DoublyLnkNode(default, node);
-        }
-
-        public T Current => _currentNode.Value;
-
-        public bool MoveNext()
-        {
-            if (_currentNode.Next == null)
-                return false;
-            _currentNode = _currentNode.Next;
+            _count--;
             return true;
         }
 
-        public void Reset() =>
-            _currentNode = new DoublyLnkNode(default, _head);
-
-        object IEnumerator.Current => Current;
-
-        public void Dispose()
+        public bool Remove(T value)
         {
+            var current = _head;
+            while (current != null)
+            {
+                if (current.Value!.Equals(value))
+                {
+                    if (current == _head)
+                    {
+                        _head = _head!.Next;
+                        if (_head != null)
+                        {
+                            _head.Preview = null;
+                        }
+                        else
+                        {
+                            _last = null;
+                        }
+                    }
+                    else if (current == _last)
+                    {
+                        _last = _last!.Preview;
+                        _last!.Next = null;
+                    }
+                    else
+                    {
+                        current.Preview!.Next = current.Next;
+                        current.Next!.Preview = current.Preview;
+                    }
+                    _count--;
+                    return true;
+                }
+                current = current.Next;
+            }
+            return false;
         }
     }
-}
+    }
