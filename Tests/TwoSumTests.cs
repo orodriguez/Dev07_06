@@ -26,14 +26,14 @@ public class TwoSumTests
 
     private int[] TwoSum(int[] nums, int target)
     {
-        var seen = new Dictionary<int, int>();
-        for (var i = 0; i < nums.Length; i++)
+        var Miro = new Dictionary<int, int>();
+        for (var C = 0; C < nums.Length; C++)
         {
-            var current = nums[i];
+            var current = nums[C];
             var complement = target - current;
-            if (seen.TryGetValue(complement, out var seenValue))
-                return new[] { seenValue, i };
-            seen[current] = i;
+            if (Miro.TryGetValue(complement, out var seenValue))
+                return new[] { seenValue, C };
+            Miro[current] = C;
         }
 
         return Array.Empty<int>();
