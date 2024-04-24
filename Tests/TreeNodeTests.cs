@@ -62,7 +62,7 @@ public class TreeNodeTests
     }
 
     [Fact]
-    public void TraversePreorder()
+    public void TraversePreOrder()
     {
         var tree = new Tree<string>("SuperMarket");
 
@@ -77,7 +77,47 @@ public class TreeNodeTests
 
         tree.TraversePreOrder(value => result.Add(value));
 
-        Assert.Equal(new[] { "SuperMarket", "Vegetables", "Tomato", "Lettuce" },
+        Assert.Equal(new[]
+            {
+                "SuperMarket", 
+                "Vegetables", 
+                "Tomato", 
+                "Lettuce"
+            },
+            result);
+    }
+    
+    [Fact]
+    public void TraversePostOrder()
+    {
+        var tree = new Tree<string>("SuperMarket");
+
+        tree
+            .Add("Vegetables", vegetables =>
+            {
+                vegetables.Add("Tomato");
+                vegetables.Add("Lettuce");
+            })
+            .Add("PersonalCare", personalCare =>
+            {
+                personalCare.Add("Shampoo", shampoo => 
+                    shampoo.Add("HeadAndShoulders"));
+            });
+
+        var result = new List<string>();
+
+        tree.TraversePostOrder(value => result.Add(value));
+
+        Assert.Equal(new[]
+            {
+                "Tomato", 
+                "Lettuce",
+                "Vegetables",
+                "HeadAndShoulders",
+                "Shampoo",
+                "PersonalCare",
+                "SuperMarket", 
+            },
             result);
     }
 }

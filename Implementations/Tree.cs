@@ -38,6 +38,9 @@ public class Tree<T>
     public void TraversePreOrder(Action<T> action) => 
         _root?.TraversePreOrder(action);
 
+    public void TraversePostOrder(Action<T> action) => 
+        _root?.TraversePostOrder(action);
+
     public class TreeNode
     {
         public T Value { get; set; }
@@ -75,6 +78,14 @@ public class Tree<T>
 
             foreach (var child in Children) 
                 child.TraversePreOrder(action);
+        }
+
+        public void TraversePostOrder(Action<T> action)
+        {
+            foreach (var child in Children) 
+                child.TraversePostOrder(action);
+            
+            action(Value);
         }
     }
 }
