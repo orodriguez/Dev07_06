@@ -7,7 +7,7 @@ public class TwoSumTests
     public void Test1()
     {
         Assert.Equal(new[] { 0, 1 },
-            TwoSum(new[] { 2, 7, 11, 15}, 9));
+            TwoSum(new[] { 2, 7, 11, 15 }, 9));
     }
 
     [Fact]
@@ -26,21 +26,16 @@ public class TwoSumTests
 
     private int[] TwoSum(int[] nums, int target)
     {
-        Dictionary<int, int> numMap = new Dictionary<int, int>();
-
-        for (int i = 0; i < nums.Length; i++)
+        var seen = new Dictionary<int, int>();
+        for (var i = 0; i < nums.Length; i++)
         {
-            int complement = target - nums[i];
-            
-            if (numMap.ContainsKey(complement))
-            {
-                return new int[] { numMap[complement], i };
-            }
-            if (!numMap.ContainsKey(nums[i]))
-            {
-                numMap.Add(nums[i], i);
-            }
+            var current = nums[i];
+            var complement = target - current;
+            if (seen.TryGetValue(complement, out var seenValue))
+                return new[] { seenValue, i };
+            seen[current] = i;
         }
-        throw new ArgumentException("No solution found");
+
+        return Array.Empty<int>();
     }
 }
