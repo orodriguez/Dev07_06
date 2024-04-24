@@ -2,7 +2,7 @@ using Implementations;
 
 namespace Tests;
 
-public class TreeNodeTests
+public class TreeTests
 {
     [Fact]
     public void Count()
