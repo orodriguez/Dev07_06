@@ -34,6 +34,6 @@ public class StackTests
         s.Push(2);
         s.Push(3);
         
-        Assert.Equal(new[] { 1, 2, 3}, s);
+        Assert.Equal(new[] { 3, 2, 1}, s);
     }
 }
