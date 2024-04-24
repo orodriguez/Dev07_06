@@ -40,18 +40,32 @@ public class TwoSumTests
         //     }
         // }
         // return[];
+
+
+        //Dictionary<int, int> numberDictionary = new Dictionary<int, int>();
+        //for (int i = 0; i < nums.Length; i++)
+        //{
+        //    numberDictionary[nums[i]] = i;
+        //}
+        //for (int i = 0; i < nums.Length; i++)
+        //{
+        //    int needed = target - nums[i];
+        //    if (numberDictionary.ContainsKey(needed) && numberDictionary[needed] != i)
+        //    {
+        //        return [i, numberDictionary[needed]];
+        //    }
+        //}
+        //return [];
+
         Dictionary<int, int> numberDictionary = new Dictionary<int, int>();
-        for (int i = 0; i < nums.Length; i++)
-        {
-            numberDictionary[nums[i]] = i;
-        }
-        for (int i = 0; i < nums.Length; i++)
+        for (int i = 0; i < nums.Length; i++) 
         {
             int needed = target - nums[i];
-            if (numberDictionary.ContainsKey(needed) && numberDictionary[needed] != i)
+            if (numberDictionary.TryGetValue(needed, out var neededValue))
             {
-                return [i, numberDictionary[needed]];
+                return [neededValue, i];
             }
+            numberDictionary[nums[i]] = i;
         }
         return [];
     }
