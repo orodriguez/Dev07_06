@@ -39,3 +39,55 @@ public class TwoSumTests
         return Array.Empty<int>();
     }
 }
+
+public class Solution
+{
+    public bool ContainsDuplicate(int[] nums)
+    {
+        HashSet<int> set = new HashSet<int>();
+
+        foreach (var num in nums)
+        {
+            if (set.Contains(num))
+            {
+                return true;
+            }
+            set.Add(num);
+        }
+        return false;
+    }
+}
+
+public class Mine {
+    public bool IsAnagram(string s, string t) {
+        if (s.Length != t.Length) {
+            return false;
+        }
+
+        Dictionary<char, int> frequencyMap = new Dictionary<char, int>();
+
+        foreach (char c in s) {
+            if (!frequencyMap.ContainsKey(c)) {
+                frequencyMap[c] = 0;
+            }
+            frequencyMap[c]++;
+        }
+
+        foreach (char c in t) {
+            if (!frequencyMap.ContainsKey(c)) {
+                return false;
+            }
+            frequencyMap[c]--;
+            if (frequencyMap[c] < 0) {
+                return false;
+            }
+        }
+
+        foreach (int value in frequencyMap.Values) {
+            if (value != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
