@@ -120,6 +120,40 @@ public class TreeTests
             },
             result);
     }
+    
+    [Fact]
+    public void TraverseLevelOrder()
+    {
+        var tree = new Tree<string>("SuperMarket");
+
+        tree
+            .Add("Vegetables", vegetables =>
+            {
+                vegetables.Add("Tomato");
+                vegetables.Add("Lettuce");
+            })
+            .Add("PersonalCare", personalCare =>
+            {
+                personalCare.Add("Shampoo", shampoo => 
+                    shampoo.Add("HeadAndShoulders"));
+            });
+
+        var result = new List<string>();
+
+        tree.TraverseLevelOrder(value => result.Add(value));
+
+        Assert.Equal(new[]
+            {
+                "SuperMarket", 
+                "Vegetables",
+                "PersonalCare",
+                "Tomato", 
+                "Lettuce",
+                "Shampoo",
+                "HeadAndShoulders",
+            },
+            result);
+    }
 
     [Fact]
     public void Level()
