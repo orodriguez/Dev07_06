@@ -8,6 +8,7 @@ public class TwoSumTests
     {
         Assert.Equal(new[] { 0, 1 },
             TwoSum(new[] { 2, 7, 11, 15 }, 9));
+            TwoSum(new[] { 2, 6, 7, 11, 15 }, 8));
     }
 
     [Fact]
@@ -22,6 +23,7 @@ public class TwoSumTests
     {
         Assert.Equal(new[] { 0, 1 },
             TwoSum(new[] { 3, 3 }, 6));
+            TwoSum(new[] { 3, 6 }, 9));
     }
 
     private int[] TwoSum(int[] nums, int target)
@@ -89,5 +91,17 @@ public class Mine {
             }
         }
         return true;
+        
+        Dictionary<int, int> seen = new Dictionary<int, int>();
+
+        for (int i = 0; i < nums.Length; i++) {
+            int complement = target - nums[i];
+
+            if (seen.ContainsKey(complement)) {
+                return new int[] { seen[complement], i};
+            }
+            seen[nums[i]] = i;
+        }
+        return new int[] { };
     }
-}
+} 
