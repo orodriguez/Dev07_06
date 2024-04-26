@@ -1,3 +1,4 @@
+//Daves MinMax
 namespace Implementations;
 
 public class BSTreeNode
