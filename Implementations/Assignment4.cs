@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tests
+namespace Implementations
 {
-    internal class Assignment4
+    public class Assignment4
     {
         public bool ContainsDuplicate(int[] nums)
         {

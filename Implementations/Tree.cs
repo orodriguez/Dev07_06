@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Implementations;
 
 public class Tree<T>
@@ -11,6 +13,7 @@ public class Tree<T>
         _root = new TreeNode(rootValue, null);
 
     public int Count() => _root?.Count() ?? 0;
+    public int Height() => _root?.Height() ?? 0;
 
     public Tree<T> Add(T value) => 
         Add(new TreeNode(value, _root));
@@ -125,6 +128,16 @@ public class Tree<T>
                 return 0;
             
             return Parent.Level() + 1;
+        }
+        public int Height()
+        {
+            int totalHeight = 0;
+            int newHeight = 0;
+            foreach(var child in Children)
+            {
+                newHeight = child.Height();
+            }
+            return totalHeight > newHeight ? totalHeight : newHeight+1;
         }
     }
 }

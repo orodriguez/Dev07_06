@@ -173,4 +173,18 @@ public class TreeTests
             vegetables.Add("Tomato", tomato => 
                 Assert.Equal(2, tomato.Level())));
     }
+    [Fact]
+    public void TreeHeight()
+    {
+        var tree = new Tree<string>("SuperMarket");
+        tree.Add("Vegetable", vegetables => vegetables.Add("Tomato"));
+
+        Assert.Equal(3, tree.Height());
+    }
+    [Fact]
+    public void HeightWhileEmpty()
+    {
+        var tree = new Tree<string>();
+        Assert.Equal(0, tree.Height());
+    }
 }

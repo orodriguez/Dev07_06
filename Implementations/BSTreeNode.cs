@@ -52,4 +52,12 @@ public class BSTreeNode
 
         return Right != null && Right.Contains(value);
     }
+    public int Min()
+    {
+        return this.Left == null ? this.Value : this.Left.Min();
+    }
+    public int Max()
+    {
+        return this.Right == null? this.Value : this.Right.Max();
+    }
 }
