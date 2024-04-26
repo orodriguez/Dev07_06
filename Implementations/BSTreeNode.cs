@@ -6,7 +6,7 @@ public class BSTreeNode
     public BSTreeNode? Left { get; set; }
     public BSTreeNode? Right { get; set; }
 
-    public BSTreeNode(int value)
+    public BSTreeNode(int value) //constructor
     {
         Value = value;
         Left = null;
@@ -52,4 +52,57 @@ public class BSTreeNode
 
         return Right != null && Right.Contains(value);
     }
+
+
+public int Max()
+{
+    if (this == null || this.Right == null)
+    {
+        return this.Value;
+    }
+    var current = this.Right;
+
+    while (current.Right != null)
+    {
+        current = current.Right;
+    }
+    return current.Value;
+}
+
+
+public int Min()
+{
+    if (this == null || this.Left == null)
+    {
+        return this.Value;
+    }
+    var current = this.Left;
+
+    while (current.Left != null)
+    {
+        current = current.Left;
+    }
+    return current.Value;
+}
+
+
+
+public int Height()
+{
+    if (this == null)
+    {
+        return 0;
+    }
+    else
+    {
+        int leftHeight = (this.Left != null) ? this.Left.Height() : 0;
+        int rightHeight = (this.Right != null) ? this.Right.Height() : 0;
+        return Math.Max(leftHeight, rightHeight) + 1;
+    }
+}
+
+
+
+
+
 }
