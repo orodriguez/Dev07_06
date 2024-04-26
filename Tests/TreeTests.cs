@@ -1,5 +1,4 @@
 using Implementations;
-
 namespace Tests;
 
 public class TreeTests
@@ -8,10 +7,10 @@ public class TreeTests
     public void Count()
     {
         var tree = new Tree<string>();
-        
+
         Assert.Equal(0, tree.Count());
     }
-    
+
     [Fact]
     public void Count_SingleNode()
     {
@@ -19,7 +18,7 @@ public class TreeTests
 
         Assert.Equal(1, tree.Count());
     }
-    
+
     [Fact]
     public void Count_WithLeaf()
     {
@@ -29,18 +28,18 @@ public class TreeTests
 
         Assert.Equal(2, tree.Count());
     }
-    
+
     [Fact]
     public void Count_SubTree()
     {
         var tree = new Tree<string>("SuperMarket");
 
-        tree.Add("Vegetables", node => 
+        tree.Add("Vegetables", node =>
             node.Add("Tomato"));
 
         Assert.Equal(3, tree.Count());
     }
-    
+
     [Fact]
     public void Count_ManyNodes()
     {
@@ -54,7 +53,7 @@ public class TreeTests
             })
             .Add("PersonalCare", personalCare =>
             {
-                personalCare.Add("Shampoo", shampoo => 
+                personalCare.Add("Shampoo", shampoo =>
                     shampoo.Add("HeadAndShoulders"));
             });
 
@@ -79,14 +78,14 @@ public class TreeTests
 
         Assert.Equal(new[]
             {
-                "SuperMarket", 
-                "Vegetables", 
-                "Tomato", 
+                "SuperMarket",
+                "Vegetables",
+                "Tomato",
                 "Lettuce"
             },
             result);
     }
-    
+
     [Fact]
     public void TraversePostOrder()
     {
@@ -100,7 +99,7 @@ public class TreeTests
             })
             .Add("PersonalCare", personalCare =>
             {
-                personalCare.Add("Shampoo", shampoo => 
+                personalCare.Add("Shampoo", shampoo =>
                     shampoo.Add("HeadAndShoulders"));
             });
 
@@ -110,17 +109,17 @@ public class TreeTests
 
         Assert.Equal(new[]
             {
-                "Tomato", 
+                "Tomato",
                 "Lettuce",
                 "Vegetables",
                 "HeadAndShoulders",
                 "Shampoo",
                 "PersonalCare",
-                "SuperMarket", 
+                "SuperMarket",
             },
             result);
     }
-    
+
     [Fact]
     public void TraverseLevelOrder()
     {
@@ -134,7 +133,7 @@ public class TreeTests
             })
             .Add("PersonalCare", personalCare =>
             {
-                personalCare.Add("Shampoo", shampoo => 
+                personalCare.Add("Shampoo", shampoo =>
                     shampoo.Add("HeadAndShoulders"));
             });
 
@@ -144,10 +143,10 @@ public class TreeTests
 
         Assert.Equal(new[]
             {
-                "SuperMarket", 
+                "SuperMarket",
                 "Vegetables",
                 "PersonalCare",
-                "Tomato", 
+                "Tomato",
                 "Lettuce",
                 "Shampoo",
                 "HeadAndShoulders",
@@ -160,17 +159,40 @@ public class TreeTests
     {
         var tree = new Tree<string>("SuperMarket");
 
-        tree.Add("Vegetable", node => 
+        tree.Add("Vegetable", node =>
             Assert.Equal(1, node.Level()));
     }
-    
+
     [Fact]
     public void Level_2()
     {
         var tree = new Tree<string>("SuperMarket");
 
-        tree.Add("Vegetable", vegetables => 
-            vegetables.Add("Tomato", tomato => 
+        tree.Add("Vegetable", vegetables =>
+            vegetables.Add("Tomato", tomato =>
                 Assert.Equal(2, tomato.Level())));
+    }
+    
+    
+    [Fact]
+    
+    // Testing desde Root To Bottom Leaf Hasra el Finai xD
+    public void Height_LongestDownwardPath()
+    {
+        
+        var tree = new Tree<int>(5);
+        tree
+            .Add(3, node =>
+            {
+                node.Add(2);
+                node.Add(4);
+            })
+            .Add(7, node =>
+            {
+                node.Add(6);
+                node.Add(8, leaf => leaf.Add(9));
+            });
+        var height = tree.Height();
+        Assert.Equal(4, height); 
     }
 }

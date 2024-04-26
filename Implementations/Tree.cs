@@ -43,6 +43,14 @@ public class Tree<T>
 
     public void TraverseLevelOrder(Action<T> action) => 
         _root?.TraverseLevelOrder(action);
+    
+    public int Height()
+    {
+        if (_root == null)
+            return 0; // If the tree is empty, return 0 height
+
+        return _root.Height();
+    }
 
     public class TreeNode
     {
@@ -125,6 +133,22 @@ public class Tree<T>
                 return 0;
             
             return Parent.Level() + 1;
+        }
+        // Height() : Returns the length of the longest downward path,
+        // From the root node to a leaf node.
+        public int Height()
+        {
+            if (Children.Count == 0)
+                return 1;
+
+            int maxHeight = 0;
+            foreach (var child in Children)
+            {
+                int childHeight = child.Height();
+                if (childHeight > maxHeight)
+                    maxHeight = childHeight;
+            }
+            return maxHeight + 1;
         }
     }
 }

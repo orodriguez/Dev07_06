@@ -173,4 +173,41 @@ public class BinarySearchTreeNodeTests
         
         Assert.False(n.Contains(50));
     }
+    
+    [Fact]
+    public void Min_ReturnsMin()
+    {
+        // Arrange
+        var root = new BSTreeNode(10);
+        root.Add(5);
+        root.Add(15);
+        root.Add(20);
+        root.Add(1);
+
+        // Act
+        var min = root.Min();
+
+        // Assert
+        Assert.Equal(1, min);
+    }
+
+    [Fact]
+    public void Max_ReturnsMax()
+    {
+        // Arrange
+        var root = new BSTreeNode(10);
+        root.Add(5);
+        root.Add(15);
+        root.Add(20);
+        root.Add(1);
+
+        // Act
+        var max = root.Max();
+
+        // Assert
+        Assert.Equal(20, max);
+    }
+    
+    
+    
 }

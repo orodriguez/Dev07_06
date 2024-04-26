@@ -38,6 +38,22 @@ public class BSTreeNode
         
         Right.Add(value);
     }
+    // Min
+    public int Min()
+    {
+        if (Left == null)
+            return Value;
+        
+        return Left.Min();
+    }
+    //Max
+    public int Max()
+    {
+        if (Right == null)
+            return Value;
+        
+        return Right.Max();
+    }
 
     public int LeftValue => Left!.Value;
     public int RightValue => Right!.Value;
