@@ -38,6 +38,8 @@ public class BSTreeNode
         
         Right.Add(value);
     }
+    
+    
 
     public int LeftValue => Left!.Value;
     public int RightValue => Right!.Value;
@@ -51,5 +53,40 @@ public class BSTreeNode
             return Left != null && Left.Contains(value);
 
         return Right != null && Right.Contains(value);
+    }
+
+    public int Min()
+    {
+
+        if (Left == null)
+        {
+            throw new InvalidOperationException();
+        }
+        
+        var current = this;
+
+        while (current.Left != null)
+        {
+            current = current.Left;
+        }
+
+        return current.Value;
+    }
+    
+    public int Max()
+    {
+        if (Right == null)
+        {
+            throw new InvalidOperationException();
+        }
+
+        var current = this;
+
+        while (current.Right != null)
+        {
+            current = current.Right;
+        }
+
+        return current.Value;
     }
 }

@@ -173,4 +173,69 @@ public class BinarySearchTreeNodeTests
         
         Assert.False(n.Contains(50));
     }
+    
+    [Fact]
+    public void Min()
+    {
+        var n = new BSTreeNode(10);
+        n.Add(5);
+        n.Add(15);
+        n.Add(15);
+        n.Add(1);
+        n.Add(0);
+        n.Add(20);
+        n.Add(30);
+        n.Add(25);
+        n.Add(50);
+        
+        Assert.Equal(0, n.Min());
+    }
+    
+    [Fact]
+    public void Min_1()
+    {
+        var n = new BSTreeNode(10);
+        n.Add(2);
+        n.Add(5);
+        
+        Assert.Equal(2, n.Min());
+    }
+
+    
+    [Fact]
+    public void Max()
+    {
+        var n = new BSTreeNode(10);
+        n.Add(5);
+        n.Add(15);
+        n.Add(15);
+        n.Add(1);
+        n.Add(20);
+        n.Add(30);
+        n.Add(25);
+        n.Add(50);
+        n.Add(70);
+        n.Add(85);
+        
+        Assert.Equal(85, n.Max());
+    }
+    
+    [Fact]
+    public void Max_1()
+    {
+        var n = new BSTreeNode(10);
+        n.Add(10);
+        n.Add(20);
+        n.Add(30);
+        n.Add(40);
+        n.Add(50);
+        n.Add(60);
+        n.Add(70);
+        n.Add(80);
+        n.Add(90);
+        n.Add(100);
+        
+        Assert.Equal(100, n.Max());
+    }
+    
 }

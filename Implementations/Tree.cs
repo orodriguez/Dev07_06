@@ -11,6 +11,8 @@ public class Tree<T>
         _root = new TreeNode(rootValue, null);
 
     public int Count() => _root?.Count() ?? 0;
+    
+    public int Height() => _root?.Height() ?? 0;
 
     public Tree<T> Add(T value) => 
         Add(new TreeNode(value, _root));
@@ -83,6 +85,22 @@ public class Tree<T>
 
             foreach (var child in Children) 
                 child.TraversePreOrder(action);
+        }
+
+        public int Height()
+        {
+            int maxHeight = 0;
+
+            foreach (var child in Children)
+            {
+                int childHeight = child.Height();
+                if (childHeight > maxHeight)
+                {
+                    maxHeight = childHeight;
+                }
+            }
+
+            return maxHeight + 1;
         }
 
         private void TraverseNodesPreOrder(Action<TreeNode> action)

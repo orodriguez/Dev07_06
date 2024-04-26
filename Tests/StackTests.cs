@@ -36,4 +36,73 @@ public class StackTests
         
         Assert.Equal(new[] { 3, 2, 1}, s);
     }
+    
+    
+    [Fact]
+    public void IsValid_Parenthesis_Single_True()
+    {
+        Assert.True(IsValid("()"));
+    }
+    
+    [Fact]
+    public void IsValid_Parenthesis_Single_False()
+    {
+        Assert.False(IsValid("("));
+    }
+    
+    [Fact]
+    public void IsValid_Parenthesis_True()
+    {
+        Assert.True(IsValid("(){}[]"));
+    }
+    
+    [Fact]
+    public void IsValid_Parenthesis_Multiple()
+    {
+        Assert.True(IsValid("(){[]}"));
+    }
+    
+    [Fact]
+    public void IsValid_Parenthesis_One_Inside_Another()
+    {
+        Assert.True(IsValid("(){[]()}"));
+    }
+    
+    [Fact]
+    public void IsValid_Parenthesis_False()
+    {
+        Assert.False(IsValid("(){[]("));
+    }
+
+    
+    public bool IsValid(string s)
+    {
+        if (s.Length == 1)
+            return false;
+        
+        var stack = new Stack<char>();
+        foreach (var letter in s)
+        {
+            if (letter is '(' or '{' or '['){
+                stack.Push(letter);
+            }
+            else
+            {
+                if (stack.Count == 0)
+                    return false;
+
+                var open = stack.Pop();
+                if ((letter == ')' && open != '(') ||
+                    (letter == ']' && open != '[') ||
+                    (letter == '}' && open != '{'))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return stack.Count == 0;
+    }
+    
+    
 }
