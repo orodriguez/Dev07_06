@@ -173,4 +173,14 @@ public class BinarySearchTreeNodeTests
         
         Assert.False(n.Contains(50));
     }
+
+    [Fact]
+    public void Min()
+    {
+        var n = new BSTreeNode(10);
+        n.Add(5);
+        n.Add(1);
+        
+        Assert.Equal(1, n.Min());
+    }
 }

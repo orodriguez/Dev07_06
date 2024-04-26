@@ -52,4 +52,6 @@ public class BSTreeNode
 
         return Right != null && Right.Contains(value);
     }
+
+    public int Min() => Left?.Min() ?? Value;
 }
