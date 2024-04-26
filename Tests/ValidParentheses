@@ -1,0 +1,94 @@
+using System;
+using System.Collections.Generic;
+using NUnit.Framework;
+using System.Linq;
+
+
+public class Solution
+{
+    public bool IsValid(string s)
+    {
+        Dictionary<char, char> mappings = new Dictionary<char, char>();
+        mappings.Add('(', ')');
+        mappings.Add('{', '}');
+        mappings.Add('[', ']');
+
+        Stack<char> stack = new Stack<char>();
+
+        foreach (char c in s)
+        {
+            if (mappings.ContainsKey(c))
+            {
+                stack.Push(c);
+            }
+            else
+            {
+                if (stack.Count == 0 || mappings[stack.Pop()] != c)
+                {
+                    return false; 
+                }
+            }
+        }
+
+        return stack.Count == 0;
+    }
+}
+
+public class BSTreeNode
+{
+    public int Value { get; set; }
+    public BSTreeNode Left { get; set; }
+    public BSTreeNode Right { get; set; }
+
+    public int Min()
+    {
+        if (Left == null)
+            return Value;
+        return Left.Min();
+    }
+
+    public int Max()
+    {
+        if (Right == null)
+            return Value;
+        return Right.Max();
+    }
+}
+
+
+[TestFixture]
+public class SolutionTests
+{
+    [Test]
+    public void IsValid_ValidString_ReturnsTrue()
+    {
+        Solution solution = new Solution();
+        string validString = "(){}[]";
+
+        bool isValid = solution.IsValid(validString);
+
+        Assert.IsTrue(isValid);
+    }
+
+    [Test]
+    public void IsValid_InvalidString_ReturnsFalse()
+    {
+        Solution solution = new Solution();
+        string invalidString = "({})[";
+
+        bool isValid = solution.IsValid(invalidString);
+
+        Assert.IsFalse(isValid);
+    }
+
+    [Test]
+    public void IsValid_EmptyString_ReturnsTrue()
+    {
+        Solution solution = new Solution();
+        string emptyString = "";
+
+        bool isValid = solution.IsValid(emptyString);
+
+        Assert.IsTrue(isValid);
+    }
+}
