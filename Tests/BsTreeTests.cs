@@ -1,13 +1,14 @@
 using Implementations;
 
 namespace Tests;
-
-public class BSTreeTests
+// Name 'BSTreeTests' does not match rule 'Types and namespaces'. Suggested name is 'BsTreeTests'
+//public class BSTreeTests
+public class BsTreeTests
 {
     [Fact]
     public void Add_Empty()
     {
-        var t = new BSTree();
+        var t = new BsTree();
         t.Add(20);
         
         Assert.Equal(1, t.Count());
@@ -17,7 +18,7 @@ public class BSTreeTests
     [Fact]
     public void Add_HasRoot()
     {
-        var t = new BSTree();
+        var t = new BsTree();
         t.Add(20);
         t.Add(25);
         
@@ -28,7 +29,7 @@ public class BSTreeTests
     [Fact]
     public void Count_Empty()
     {
-        var t = new BSTree();
+        var t = new BsTree();
         
         Assert.Equal(0, t.Count());
     }
@@ -36,7 +37,7 @@ public class BSTreeTests
     [Fact]
     public void Count_Repeated()
     {
-        var t = new BSTree();
+        var t = new BsTree();
         t.Add(10);
         t.Add(10);
         
@@ -46,7 +47,7 @@ public class BSTreeTests
     [Fact]
     public void Count_Two()
     {
-        var t = new BSTree();
+        var t = new BsTree();
         t.Add(10);
         t.Add(12);
         
@@ -56,7 +57,7 @@ public class BSTreeTests
     [Fact]
     public void Contains_Empty()
     {
-        var t = new BSTree();
+        var t = new BsTree();
         
         Assert.False(t.Contains(10));
     }
@@ -64,7 +65,7 @@ public class BSTreeTests
     [Fact]
     public void Contains_One()
     {
-        var t = new BSTree();
+        var t = new BsTree();
         t.Add(10);
         
         Assert.True(t.Contains(10));
@@ -73,7 +74,7 @@ public class BSTreeTests
     [Fact]
     public void Delete()
     {
-        var t = new BSTree();
+        var t = new BsTree();
 
         t.Delete(10);
         
@@ -83,7 +84,7 @@ public class BSTreeTests
     [Fact]
     public void Delete_OneNode()
     {
-        var t = new BSTree();
+        var t = new BsTree();
         t.Add(10);
         t.Delete(10);
         

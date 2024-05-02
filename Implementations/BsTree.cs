@@ -1,16 +1,18 @@
 using AAD;
 
 namespace Implementations;
+//Name 'BSTree' does not match rule 'Types and namespaces'. Suggested name is 'BsTree'.
+// public class BSTree
+public class BsTree
 
-public class BSTree
 {
     private BSTreeNode? _root;
 
-    public BSTree() : this(null)
+    public BsTree() : this(null)
     {
     }
 
-    private BSTree(BSTreeNode? root) =>
+    private BsTree(BSTreeNode? root) =>
         _root = root;
 
     public void Add(int value)
