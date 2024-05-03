@@ -143,4 +143,20 @@ public class GraphTests
         
         Assert.Equal(expected, paths);
     }
+    [Fact]
+    public void Paths_Shortest()
+    {
+        var g = new Graph<string>();
+        g.Add("SD", "Villa Altagracia");
+        g.Add("Bonao", "La Vega");
+        g.Add("SD", "Yamasa");
+        g.Add("Yamasa", "Bonao");
+        g.Add("Yamasa", "Cotui");
+
+        var paths = g.ShortestPath("SD", "La Vega");
+
+        var expected = new[]{"SD", "Yamasa", "Bonao", "La Vega"};
+
+        Assert.Equal(expected, paths);
+    }
 }

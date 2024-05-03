@@ -13,6 +13,25 @@ public class BSTree
     private BSTree(BSTreeNode? root) =>
         _root = root;
 
+    public void Copy(BSTree emptyTree)
+    {
+        if(this._root != null) 
+        {
+            BSTreeNode? newRoot = CopyInto(_root);
+            emptyTree._root = newRoot;
+        }
+    }
+    private BSTreeNode? CopyInto(BSTreeNode? node) 
+    {
+        if(node == null) 
+        {
+            return null;
+        }
+        BSTreeNode newNode = new BSTreeNode(node.Value);
+        newNode.Left = CopyInto(node.Left);
+        newNode.Right = CopyInto(node.Right);
+        return newNode;
+    }
     public void Add(int value)
     {
         if (_root == null)

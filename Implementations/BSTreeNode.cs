@@ -89,11 +89,11 @@ public class BSTreeNode
     }
 
     // Best: O(log n), Worst: O(n)
-    public int Min() => 
+    public int Min() =>
         Left?.Min() ?? Value;
-    
+
     // Best: O(log n), Worst: O(n)
-    public int Max() => 
+    public int Max() =>
         Right?.Max() ?? Value;
 
     public BSTreeNode? Delete(int valueToDelete)
@@ -112,15 +112,15 @@ public class BSTreeNode
 
         if (Value != valueToDelete)
             return this;
-        
+
         // Value == value cases
-        
+
         if (Left == null && Right == null)
             return null;
-        
+
         if (Left == null)
             return Right;
-        
+
         if (Right == null)
             return Left;
 
@@ -145,13 +145,5 @@ public class BSTreeNode
         var result = new List<int>();
         TraverseInOrder(node => result.Add(node.Value));
         return result.ToArray();
-    }
-    public int Min()
-    {
-        return this.Left == null ? this.Value : this.Left.Min();
-    }
-    public int Max()
-    {
-        return this.Right == null? this.Value : this.Right.Max();
     }
 }

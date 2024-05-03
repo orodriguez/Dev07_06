@@ -17,12 +17,17 @@ public class Graph<T> where T : notnull
 
         if (start.Equals(end))
             return new[] { prefix.Concat(new[] { start }) };
-        
+
         return _edges[start]
             .Where(node => !node.Equals(start))
             .Where(node => !prefix.Contains(node))
             .Select(node => Paths(prefix.Concat(new[] { start }), node, end))
             .SelectMany(paths => paths);
+    }
+    public IEnumerable<T> ShortestPath(T start, T end)
+    {
+        var shortest = Paths(start, end).OrderBy(path => path.Count()).FirstOrDefault();
+        return shortest ?? Enumerable.Empty<T>();
     }
 
     public void Add(T from, T to)

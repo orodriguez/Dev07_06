@@ -89,4 +89,24 @@ public class BSTreeTests
         
         Assert.Equal(0, t.Count());
     }
+    [Fact]
+    public void Copy_Into_Empty()
+    {
+        var t = new BSTree();
+        t.Add(20);
+        t.Add(25);
+        t.Add(30);
+        t.Add(5);
+        t.Add(22);
+
+        var empty = new BSTree();
+        t.Copy(empty);
+
+        Assert.Equal(t.Count(), empty.Count());
+        Assert.True(empty.Contains(20));
+        Assert.True(empty.Contains(25));
+        Assert.True(empty.Contains(30));
+        Assert.True(empty.Contains(5));
+        Assert.True(empty.Contains(22));
+    }
 }
