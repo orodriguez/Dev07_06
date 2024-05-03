@@ -47,4 +47,15 @@ public class BSTree
 
         _root = _root.Delete(valueToDelete);
     }
+    public void Copy(BSTree emptyTree)
+    {
+        if (_root == null)
+            return;
+
+        var values = _root.ToArray();
+        foreach (var value in values)
+        {
+            emptyTree.Add(value);
+        }
+    }
 }

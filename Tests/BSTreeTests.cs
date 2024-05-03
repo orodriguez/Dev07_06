@@ -89,4 +89,45 @@ public class BSTreeTests
         
         Assert.Equal(0, t.Count());
     }
+    [Fact]
+        public void Copy_Empty()
+        {
+            var sourceTree = new BSTree();
+            var emptyTree = new BSTree();
+            sourceTree.Copy(emptyTree);
+
+            Assert.Equal(0, emptyTree.Count());
+        }
+
+        [Fact]
+        public void Copy_SingleNode()
+        {
+            var sourceTree = new BSTree();
+            sourceTree.Add(10);
+
+            var emptyTree = new BSTree();
+            sourceTree.Copy(emptyTree);
+
+            Assert.Equal(1, emptyTree.Count());
+            Assert.True(emptyTree.Contains(10));
+        }
+
+        [Fact]
+        public void Copy_MultipleNodes()
+        {
+            var sourceTree = new BSTree();
+            sourceTree.Add(10);
+            sourceTree.Add(5);
+            sourceTree.Add(15);
+            sourceTree.Add(3);
+
+            var emptyTree = new BSTree();
+            sourceTree.Copy(emptyTree);
+
+            Assert.Equal(4, emptyTree.Count());
+            Assert.True(emptyTree.Contains(10));
+            Assert.True(emptyTree.Contains(5));
+            Assert.True(emptyTree.Contains(15));
+            Assert.True(emptyTree.Contains(3));
+        }
 }

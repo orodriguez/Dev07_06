@@ -143,4 +143,127 @@ public class GraphTests
         
         Assert.Equal(expected, paths);
     }
+
+    [Fact]
+        public void ShortestPath_NodeNotFound()
+        {
+            var g = new Graph<string>();
+
+            var path = g.ShortestPath("A", "B");
+
+            Assert.Empty(path);
+        }
+
+        [Fact]
+        public void ShortestPath_StartDoesNotExist()
+        {
+            var g = new Graph<string>();
+            g.Add("A", "B");
+
+            var path = g.ShortestPath("C", "B");
+
+            Assert.Empty(path);
+        }
+
+        [Fact]
+        public void ShortestPath_EndDoesNotExist()
+        {
+            var g = new Graph<string>();
+            g.Add("A", "B");
+
+            var path = g.ShortestPath("A", "C");
+
+            Assert.Empty(path);
+        }
+
+        [Fact]
+        public void ShortestPath_StartToStart()
+        {
+            var g = new Graph<string>();
+            g.Add("A", "B");
+
+            var path = g.ShortestPath("A", "A");
+
+            Assert.Single(path, "A");
+        }
+
+        [Fact]
+        public void ShortestPath_OneSingleStepPath()
+        {
+            var g = new Graph<string>();
+            g.Add("A", "B");
+
+            var path = g.ShortestPath("A", "B");
+
+            Assert.Equal(new[] { "A", "B" }, path);
+        }
+
+        [Fact]
+        public void ShortestPath_One2StepPath()
+        {
+            var g = new Graph<string>();
+            g.Add("A", "B");
+            g.Add("B", "C");
+
+            var path = g.ShortestPath("A", "C");
+
+            Assert.Equal(new[] { "A", "B", "C" }, path);
+        }
+
+        [Fact]
+        public void ShortestPath_TwoPaths()
+        {
+            var g = new Graph<string>();
+            g.Add("A", "B");
+            g.Add("B", "C");
+            g.Add("A", "C");
+
+            var path = g.ShortestPath("A", "C");
+
+            Assert.Equal(new[] { "A", "C" }, path);
+        }
+
+        [Fact]
+        public void ShortestPath_3StepsPath()
+        {
+            var g = new Graph<string>();
+            g.Add("A", "B");
+            g.Add("B", "C");
+            g.Add("C", "D");
+
+            var path = g.ShortestPath("A", "D");
+
+            Assert.Equal(new[] { "A", "B", "C", "D" }, path);
+        }
+
+        [Fact]
+        public void ShortestPath_Circular()
+        {
+            var g = new Graph<string>();
+            g.Add("A", "B");
+            g.Add("B", "C");
+            g.Add("C", "A");
+            g.Add("C", "D");
+
+            var path = g.ShortestPath("A", "D");
+
+            Assert.Equal(new[] { "A", "B", "C", "D" }, path);
+        }
+
+        [Fact]
+        public void ShortestPath_Complex()
+        {
+            var g = new Graph<string>();
+            g.Add("SD", "Villa Altagracia");
+            g.Add("Villa Altagracia", "Bonao");
+            g.Add("Bonao", "La Vega");
+            g.Add("SD", "Yamasa");
+            g.Add("Yamasa", "Bonao");
+            g.Add("Yamasa", "Cotui");
+            g.Add("Cotui", "La Vega");
+
+            var path = g.ShortestPath("SD", "La Vega");
+
+            Assert.Equal(new[] { "SD", "Villa Altagracia", "Bonao", "La Vega" }, path);
+        }
 }
