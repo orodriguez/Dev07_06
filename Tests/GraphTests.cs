@@ -143,4 +143,85 @@ public class GraphTests
         
         Assert.Equal(expected, paths);
     }
+    
+    
+     [Fact]
+        public void ShortestPath_Exists()
+        {
+            var g = new Graph<string>();
+            g.Add("A", "B");
+            g.Add("A", "C");
+            g.Add("B", "D");
+            g.Add("C", "D");
+            g.Add("D", "E");
+            g.Add("C", "E");
+
+            var shortestPath = g.ShortestPath("A", "E");
+
+            var expectedPath = new[] { "A", "C", "E" };
+
+            Assert.Equal(expectedPath, shortestPath);
+        }
+
+        [Fact]
+        public void ShortestPath_NoPath()
+        {
+            var g = new Graph<string>();
+            g.Add("A", "B");
+            g.Add("B", "C");
+            g.Add("B", "D");
+
+            var shortestPath = g.ShortestPath("A", "E");
+
+            Assert.Empty(shortestPath);
+        }
+
+        [Fact]
+        public void ShortestPath_StartEqualsEnd()
+        {
+            var g = new Graph<string>();
+            g.Add("A", "B");
+            g.Add("B", "C");
+
+            var shortestPath = g.ShortestPath("A", "A");
+
+            var expectedPath = new[] { "A" };
+
+            Assert.Equal(expectedPath, shortestPath);
+        }
+
+        [Fact]
+        public void ShortestPath_Circular()
+        {
+            var g = new Graph<string>();
+            g.Add("A", "B");
+            g.Add("B", "C");
+            g.Add("C", "A");
+            g.Add("C", "D");
+
+            var shortestPath = g.ShortestPath("A", "D");
+
+            var expectedPath = new[] { "A", "B", "C", "D" };
+
+            Assert.Equal(expectedPath, shortestPath);
+        }
+
+        [Fact]
+        public void ShortestPath_Complex()
+        {
+            var g = new Graph<string>();
+            g.Add("SD", "Villa Altagracia");
+            g.Add("Villa Altagracia", "Bonao");
+            g.Add("Bonao", "La Vega");
+            g.Add("SD", "Yamasa");
+            g.Add("Yamasa", "Bonao");
+            g.Add("Yamasa", "Cotui");
+            g.Add("Cotui", "La Vega");
+
+            var shortestPath = g.ShortestPath("SD", "La Vega");
+
+            var expectedPath = new[] { "SD", "Villa Altagracia", "Bonao", "La Vega" };
+
+            Assert.Equal(expectedPath, shortestPath);
+        }
 }

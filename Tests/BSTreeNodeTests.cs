@@ -5,7 +5,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Constructor()
     {
-        var n = new BSTreeNode(value: 10);
+        var n = new BsTreeNode(value: 10);
 
         Assert.Equal(10, n.Value);
         Assert.Null(n.Left);
@@ -15,7 +15,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Add_RepeatedValue()
     {
-        var n = new BSTreeNode(value: 10);
+        var n = new BsTreeNode(value: 10);
         n.Add(10);
 
         Assert.Null(n.Left);
@@ -25,7 +25,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Add_Left()
     {
-        var n = new BSTreeNode(value: 10);
+        var n = new BsTreeNode(value: 10);
         n.Add(5);
 
         Assert.NotNull(n.Left);
@@ -37,7 +37,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Add_LeftIsNotNull()
     {
-        var n = new BSTreeNode(value: 10);
+        var n = new BsTreeNode(value: 10);
         n.Add(5);
         n.Add(3);
 
@@ -51,7 +51,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Add_Right()
     {
-        var n = new BSTreeNode(value: 10);
+        var n = new BsTreeNode(value: 10);
         n.Add(15);
 
         Assert.Null(n.Left);
@@ -63,7 +63,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Add_RightIsNotNull()
     {
-        var n = new BSTreeNode(value: 10);
+        var n = new BsTreeNode(value: 10);
         n.Add(15);
         n.Add(20);
 
@@ -77,7 +77,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Contains_OneNode()
     {
-        var n = BSTreeNode
+        var n = BsTreeNode
             .From(new[] { 15 });
 
         Assert.True(n.Contains(15));
@@ -86,7 +86,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Contains_InLeft()
     {
-        var n = BSTreeNode
+        var n = BsTreeNode
             .From(new[] { 15, 5 });
 
         Assert.True(n.Contains(5));
@@ -95,7 +95,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Contains_InRight()
     {
-        var n = BSTreeNode
+        var n = BsTreeNode
             .From(new[] { 15, 20 });
 
         Assert.True(n.Contains(20));
@@ -104,7 +104,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Contains_DotNotExistInLeft()
     {
-        var n = BSTreeNode
+        var n = BsTreeNode
             .From(new[] { 15 });
 
         Assert.False(n.Contains(5));
@@ -113,7 +113,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Contains_DotNotExistInRight()
     {
-        var n = BSTreeNode
+        var n = BsTreeNode
             .From(new[] { 15 });
 
         Assert.False(n.Contains(20));
@@ -122,7 +122,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Min_One()
     {
-        var n = new BSTreeNode(10);
+        var n = new BsTreeNode(10);
 
         Assert.Equal(10, n.Min());
     }
@@ -130,7 +130,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Min_Many()
     {
-        var n = BSTreeNode
+        var n = BsTreeNode
             .From(new[] { 10, 5, 1, 3, 15, 8, 7 });
         ;
 
@@ -140,7 +140,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Max_Many()
     {
-        var n = BSTreeNode
+        var n = BsTreeNode
             .From(new[] { 10, 5, 1, 3, 15, 8, 7 });
         ;
 
@@ -150,7 +150,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Delete_OnlyRootLeaf()
     {
-        var t = new BSTreeNode(10);
+        var t = new BsTreeNode(10);
         var result = t.Delete(10);
         Assert.Null(result);
     }
@@ -158,7 +158,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Delete_LeftLeaf()
     {
-        var t = BSTreeNode
+        var t = BsTreeNode
             .From(new[] { 10, 5 });
 
         t.Delete(5);
@@ -169,7 +169,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Delete_LeafInLeftChild()
     {
-        var t = BSTreeNode
+        var t = BsTreeNode
             .From(new[] { 10, 5, 3 });
 
         t.Delete(3);
@@ -181,7 +181,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Delete_LeftChildWithLeftChild()
     {
-        var t = BSTreeNode
+        var t = BsTreeNode
             .From(new[] { 10, 5, 3 });
 
         t.Delete(5);
@@ -193,7 +193,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Delete_LeafInRightChild()
     {
-        var t = BSTreeNode
+        var t = BsTreeNode
             .From(new[] { 10, 15 });
 
         t.Delete(15);
@@ -205,7 +205,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Delete_RightChildRightChild()
     {
-        var t = BSTreeNode
+        var t = BsTreeNode
             .From(new[] { 10, 15, 20 });
 
         t.Delete(15);
@@ -217,7 +217,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Delete_NotFoundInLeft()
     {
-        var t = BSTreeNode
+        var t = BsTreeNode
             .From(new[] { 10 });
 
         t.Delete(3);
@@ -228,7 +228,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Delete_NotFoundInRight()
     {
-        var t = BSTreeNode
+        var t = BsTreeNode
             .From(new[] { 10 });
 
         t.Delete(15);
@@ -240,7 +240,7 @@ public class BSTreeNodeTest
     [Fact]
     public void Delete_SubTreeWithChildrenLeftAndRight()
     {
-        var t = BSTreeNode
+        var t = BsTreeNode
             .From(new[] { 10, 5, 4, 8, 1, 7, 9 });
 
         t.Delete(5);
@@ -253,7 +253,7 @@ public class BSTreeNodeTest
     [Fact]
     public void TraverseInOrder_OneNode()
     {
-        var root = BSTreeNode
+        var root = BsTreeNode
             .From(new[] { 15 });
 
         var result = new List<int>();
@@ -267,7 +267,7 @@ public class BSTreeNodeTest
     [Fact]
     public void TraverseInOrder_OneNodeInLeft()
     {
-        var root = BSTreeNode
+        var root = BsTreeNode
             .From(new[] { 15, 12 });
 
         var result = new List<int>();
@@ -281,7 +281,7 @@ public class BSTreeNodeTest
     [Fact]
     public void TraverseInOrder_Many()
     {
-        var root = BSTreeNode
+        var root = BsTreeNode
             .From(new[] { 15, 12, 27, 7, 14, 20, 88, 23 });
 
         var result = new List<int>();
@@ -295,7 +295,7 @@ public class BSTreeNodeTest
     [Fact]
     public void TraversePreOrder_Many()
     {
-        var root = BSTreeNode
+        var root = BsTreeNode
             .From(new[] { 15, 12, 27, 7, 14, 20, 88, 23 });
 
         var result = new List<int>();
@@ -309,7 +309,7 @@ public class BSTreeNodeTest
     [Fact]
     public void TraversePostOrder_Many()
     {
-        var root = BSTreeNode
+        var root = BsTreeNode
             .From(new[] { 15, 12, 27, 7, 14, 20, 88, 23 });
 
         var result = new List<int>();

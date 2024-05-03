@@ -35,4 +35,40 @@ public class Graph<T> where T : notnull
         
         _edges[from].Add(to);
     }
+    /*
+     *
+     *
+     * 
+     */
+    public IEnumerable<T> ShortestPath(T start, T end)
+    {
+        var visited = new HashSet<T>();
+        var queue = new Queue<List<T>>();
+        queue.Enqueue(new List<T> { start });
+
+        while (queue.Any())
+        {
+            var path = queue.Dequeue();
+            var lastNode = path.Last();
+
+            if (lastNode.Equals(end))
+                return path;
+
+            if (visited.Contains(lastNode))
+                continue;
+
+            visited.Add(lastNode);
+
+            if (_edges.ContainsKey(lastNode))
+            {
+                foreach (var neighbor in _edges[lastNode])
+                {
+                    var newPath = new List<T>(path) { neighbor };
+                    queue.Enqueue(newPath);
+                }
+            }
+        }
+
+        return Enumerable.Empty<T>();
+    }
 }

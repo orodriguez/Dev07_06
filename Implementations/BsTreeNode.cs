@@ -1,14 +1,14 @@
 namespace AAD;
 
-public class BSTreeNode
+public class BsTreeNode
 {
     public int Value { get; set; }
-    public BSTreeNode? Left { get; set; }
-    public BSTreeNode? Right { get; set; }
+    public BsTreeNode? Left { get; set; }
+    public BsTreeNode? Right { get; set; }
     public int? LeftValue => Left?.Value;
     public int? RightValue => Right?.Value;
 
-    public BSTreeNode(int value)
+    public BsTreeNode(int value)
     {
         Value = value;
         Left = null;
@@ -28,7 +28,7 @@ public class BSTreeNode
 
         if (Value > newValue)
         {
-            Left = new BSTreeNode(newValue);
+            Left = new BsTreeNode(newValue);
             return;
         }
 
@@ -38,12 +38,12 @@ public class BSTreeNode
             return;
         }
 
-        Right = new BSTreeNode(newValue);
+        Right = new BsTreeNode(newValue);
     }
 
-    public static BSTreeNode From(int[] values)
+    public static BsTreeNode From(int[] values)
     {
-        var root = new BSTreeNode(values.First());
+        var root = new BsTreeNode(values.First());
 
         foreach (var value in values.Skip(1))
             root.Add(value);
@@ -67,21 +67,21 @@ public class BSTreeNode
     }
 
     // O(n)
-    public void TraverseInOrder(Action<BSTreeNode> action)
+    public void TraverseInOrder(Action<BsTreeNode> action)
     {
         Left?.TraverseInOrder(action);
         action(this);
         Right?.TraverseInOrder(action);
     }
 
-    public void TraversePreOrder(Action<BSTreeNode> action)
+    public void TraversePreOrder(Action<BsTreeNode> action)
     {
         action(this);
         Left?.TraversePreOrder(action);
         Right?.TraversePreOrder(action);
     }
 
-    public void TraversePostOrder(Action<BSTreeNode> action)
+    public void TraversePostOrder(Action<BsTreeNode> action)
     {
         Left?.TraversePostOrder(action);
         Right?.TraversePostOrder(action);
@@ -96,7 +96,7 @@ public class BSTreeNode
     public int Max() => 
         Right?.Max() ?? Value;
 
-    public BSTreeNode? Delete(int valueToDelete)
+    public BsTreeNode? Delete(int valueToDelete)
     {
         if (Value > valueToDelete && Left != null)
         {
@@ -125,7 +125,7 @@ public class BSTreeNode
             return Left;
 
         var minRight = Right.Min();
-        var newNode = new BSTreeNode(minRight)
+        var newNode = new BsTreeNode(minRight)
         {
             Left = Left,
             Right = Right.Delete(minRight)
