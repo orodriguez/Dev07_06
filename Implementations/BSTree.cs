@@ -47,4 +47,19 @@ public class BSTree
 
         _root = _root.Delete(valueToDelete);
     }
+
+    public void Copy(BSTree emptyTree)
+    {
+        CopyNode(_root, emptyTree);
+    }
+
+    public void CopyNode(BSTreeNode? root, BSTree emptyTree)
+    {
+        if ( root != null)
+        {
+            emptyTree.Add(root.Value);
+            CopyNode(root.Left, emptyTree);
+            CopyNode(root.Right, emptyTree);
+        }
+    }
 }

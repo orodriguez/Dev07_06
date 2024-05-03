@@ -89,4 +89,38 @@ public class BSTreeTests
         
         Assert.Equal(0, t.Count());
     }
+    
+    [Fact]
+    public void TestCopy()
+    {
+        var t = new BSTree();
+        t.Add(5);
+        t.Add(3);
+        t.Add(7);
+
+        var emptyTree = new BSTree();
+
+        // Act
+        t.Copy(emptyTree);
+
+        // Assert
+        Assert.Equal(3, emptyTree.Count());
+        Assert.True(emptyTree.Contains(5));
+        Assert.True(emptyTree.Contains(3));
+        Assert.True(emptyTree.Contains(7));
+    }
+    
+    [Fact]
+    public void TestCopy_EmptyTree()
+    {
+        // Arrange
+        var t = new BSTree();
+        var emptyTree = new BSTree();
+
+        // Act
+        t.Copy(emptyTree);
+
+        // Assert
+        Assert.Equal(0, emptyTree.Count());
+    }
 }

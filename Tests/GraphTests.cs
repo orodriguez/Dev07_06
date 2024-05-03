@@ -143,4 +143,61 @@ public class GraphTests
         
         Assert.Equal(expected, paths);
     }
+    
+    [Fact]
+    public void ShortestPath()
+    {
+        var graph = new Graph<string>();
+        graph.Add("A", "B");
+        graph.Add("A", "C");
+        graph.Add("B", "D");
+        graph.Add("C", "E");
+        graph.Add("D", "E");
+        graph.Add("D", "F");
+        graph.Add("E", "F");
+
+        var shortestPath = graph.ShortestPath("A", "F");
+
+        Assert.Equal(new[] { "A", "B", "D", "F" }, shortestPath);
+    }
+    
+    [Fact]
+    public void ShortestPath_SingleNode()
+    {
+        var graph = new Graph<string>();
+        graph.Add("A", "A");
+
+        var shortestPath = graph.ShortestPath("A", "A");
+
+        var collection = shortestPath as string[] ?? shortestPath.ToArray();
+        Assert.Single(collection);
+        Assert.Equal("A", collection[0]);
+    }
+    
+    [Fact]
+    public void ShortestPath_Empty()
+    {
+        var graph = new Graph<string>();
+
+        var shortestPath = graph.ShortestPath("A", "B");
+
+        Assert.Empty(shortestPath);
+    }
+    
+    [Fact]
+    public void Paths_ShortestPath_Complex()
+    {
+        var g = new Graph<string>();
+        g.Add("SD", "Villa Altagracia");
+        g.Add("Villa Altagracia", "Bonao");
+        g.Add("Bonao", "La Vega");
+        g.Add("SD", "Yamasa");
+        g.Add("Yamasa", "Bonao");
+        g.Add("Yamasa", "Cotui");
+        g.Add("Cotui", "La Vega");
+
+        var paths = g.ShortestPath("SD", "Bonao");
+        
+        Assert.Equal(new[] { "SD", "Villa Altagracia", "Bonao" }, paths);
+    }
 }
